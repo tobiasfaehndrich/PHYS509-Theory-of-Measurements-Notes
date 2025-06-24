@@ -1,0 +1,50 @@
+\ProvidesPackage{commands}
+
+\usepackage{amsmath} % AMS Math Package
+\usepackage{amsthm} % Theorem Formatting
+\usepackage{amssymb}    % Math symbols such as \mathbb
+\usepackage{graphicx} % Allows for eps images
+\usepackage[dvips,letterpaper,margin=1in,bottom=0.7in]{geometry}
+\usepackage{commath}        % Provides commands for differential and integral notation (e.g., \dif, \norm{}, \abs{})
+\usepackage{tensor}         % Allows easy typesetting of tensor indices (e.g., \tensor[^a_b^c]{T})
+\usepackage{mathtools}      % Extends amsmath with additional features (e.g., \coloneqq, \mathclap, improved equation alignment)
+\usepackage{pgfplots}       % Used for creating high-quality function plots directly in LaTeX
+\usetikzlibrary{arrows.meta} % Adds arrow customization options to TikZ (used by pgfplots for vector and diagram styles)
+\usepackage{xcolor}         % Enables color customization in text and graphics
+\usepackage{float}          % Improves control over figure/table placement (e.g., [H] option to force exact position)
+\usepackage{hyperref}       % Adds clickable hyperlinks for references, citations, and URLs in the PDF
+\usepackage{fullpage}       % Sets reasonable page margins (shrinks default LaTeX margins to fit more content)
+\usepackage{enumerate}      % Allows customization of numbered list labels (e.g., use (i), (a), etc.)
+\usepackage[breakable]{tcolorbox} % Allows colored and breakable text boxes (great for theorems, proofs, etc.)
+\tcbuselibrary{theorems}    % Loads predefined styles for theorem-like environments in tcolorbox
+\usepackage{siunitx}        % Provides consistent formatting for SI units and numbers (e.g., \SI{3.5}{\kilo\gram})
+\numberwithin{equation}{section} % Numbers equations by section (e.g., (2.1), (2.2), ...)
+\numberwithin{figure}{section}   % Numbers figures by section (e.g., Figure 2.1, Figure 2.2, ...)
+\usepackage{physics}    % Provides convenient commands for typesetting physics notation (e.g., \dv, \pdv, \qty, \bra, \ket)
+\usepackage{enumitem}   % Allows customization of list environments (e.g., control spacing, labels, continuation)
+\usepackage{booktabs}   % Enables professional-looking tables with commands like \toprule, \midrule, and \bottomrule
+\usepackage{cancel}
+
+
+
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\recip}[1]{\frac{1}{#1}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\avg}[1]{\langle #1 \rangle}
+
+
+\DeclarePairedDelimiter{\paren}{(}{)}       % parentheses
+\DeclarePairedDelimiter{\brackets}{[}{]} % square brackets
+\DeclarePairedDelimiter{\cbraces}{\{}{\}} % curly braces
+\DeclarePairedDelimiter{\angles}{\langle}{\rangle} % angle brackets
+
+
+
+
+\newtcolorbox{defbox}[1]{colback=red!5!, colframe=red!75!black,fonttitle=\bfseries, title=Definition#1}
+\newtcolorbox{blankbox}[1]{colback=blue!5, colframe=blue!55!black, fonttitle=\bfseries, title=#1}
+\newtcolorbox{thmbox}[1]{colback=blue!5, colframe=blue!55!black, fonttitle=\bfseries, title=Theorem#1}
+\newtcolorbox{lembox}[1]{colback=blue!5, colframe=blue!55!black, fonttitle=\bfseries, title=Lemma#1}
+\newtcolorbox{corbox}[1]{colback=blue!5, colframe=blue!55!black, fonttitle=\bfseries, title=Corollary#1}
+\newtcolorbox{propbox}[1]{colback=blue!5, colframe=blue!55!black, fonttitle=\bfseries, title=Proposition#1}
+\newtcolorbox{axiombox}[1]{colback=green!5, colframe=green!35!black, fonttitle=\bfseries, title=Axiom#1}
