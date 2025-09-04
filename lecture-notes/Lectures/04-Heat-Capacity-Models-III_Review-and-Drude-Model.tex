@@ -1,0 +1,143 @@
+\section[Heat Capacity Models III — Drude Model]{\hyperlink{toc}{Heat Capacity Models III — Drude Model}}
+
+Recall:
+\textbf{The Density of states}
+
+\begin{itemize}
+    \item It is conventional to express integrals of this type in terms of the density of states, $g(\omega)$, which is defined as the number of states per unit frequency interval, i.e.,
+    \[ \avg{E} = \int_{0}^{\infty} \dd{\omega} \, g(\omega) \, \hbar \omega \brackets*{\frac{1}{e^{\beta \hbar \omega} - 1} + \frac{1}{2}} \]
+
+
+    where $\beta = \frac{1}{k_B T}$, and $k_B$ is the Boltzmann constant.
+    \[ g(\omega) = L^3 \frac{12 \pi \omega^2}{(2 \pi)^3 v^3} \]
+
+    \item The density of states tells us how many new modes (sound waves here) are available at a given temperature / frequency ($\hbar \omega = k_B T$).
+
+    \item The DOS for the Einstein model would look like a delta function at $\omega = \omega_E$.
+    \item The DOS for the Debye model is a parabola ($g(\omega) \propto \omega^2$), which is a good approximation for low frequencies.
+
+    \item Solving for the integral for $\avg{E}$ (as done in HW \#1) gives:
+    
+    \[ \avg{E} \propto \text{T-independent} + a \text{T}^4 \]
+
+    where the T-independent term is the zero-point energy, and the $a \text{T}^4$ term is the contribution from the phonons. a being some constant.
+
+    \item The low T limit accounts for the $T^3$ law
+    
+    \[ \dv{\avg{E}}{T} = C \propto a \text{T}^3 \]
+
+    which agrees with experiment.
+
+    \item The high T limit does not saturate at the Dulong-Petit Law value,
+    
+    \[ C \propto a \text{T}^3 \]
+
+    still at all temperatures, and never saturates to the Dulong-Petit Law value of $3Nk_B$.
+    
+    \item Dybye comes up with a solution to this problem, imposing that there should only be as many modes as there are degrees of freedom, i.e. integrate between $0$ and $\omega_{\text{cutoff}}$
+    
+    \[ 3N = N_{\text{atoms}} \cdot 3 = \# \text{ allowed modes} \]
+    
+    This was built into Einstein's calculation.
+
+    \[ 3 N = \int_{0}^{\omega_{\text{cutoff}}} \dd{\omega} \, g(\omega) \]
+
+    then evaluate this integral to find the cutoff frequency, $\omega_{\text{cutoff}}$.
+
+    \item This now gives the correct high T limit agreeing with the Dulong-Petit Law:
+    \[ \avg{E} = \int_{0}^{\omega_{\text{cutoff}}} \dd{\omega} \, g(\omega) \, \hbar \omega \brackets*{\frac{1}{e^{\beta \hbar \omega} - 1} + \frac{1}{2}} \Rightarrow 3 R T \, \text{as} \, T \to \infty \]
+
+    where $R$ is the gas constant, and $3 R$ is the Dulong-Petit Law value.
+
+    \item This cutoff frequency is the Debye frequency, $\omega_D$, and the Debye temperature is defined as:
+
+    \[ \omega_{\text{cutoff}} = \omega_D = \sqrt[3]{\frac{6 \pi^2 N^3}{V^3}}  = \sqrt[3]{6 \pi^2 n v^3}\]
+
+    where $n$ is the number density of atoms ($n = \frac{N}{V}$), and $v$ is the speed of sound in the material.
+
+    \item $T_D$ is the Debye temperature (also called $\theta_D$)
+    \[ T_D = \frac{\hbar \omega_D}{k_B} \]
+    
+    \item If a material undergoes a phase transition causing its colume to half. What will happen to the Debye temperature? (assume $v$ is constant - is this a good assumption?)
+    
+    \begin{itemize}
+        \item $T_D = \frac{\hbar \omega_D}{k_B} = \frac{\hbar}{k_B} \sqrt[3]{6 \pi^2 n v^3}$
+        \item $n$ will double, so $T_D$ will increase by a factor of $\sqrt[3]{2}$.
+        \item If the speed of sound is not constant, then the change in $T_D$ will depend on how the speed of sound changes with volume.
+    \end{itemize}
+
+    \item Debye and Einstein are similar, but Debye model is more accurate for low temperatures.
+    
+    \item Note that at intermediate temperatures, the integral in the Debye formulation can only be solved numerically.
+    
+    \item Debye model \underbar{very} successful, but not perfect:
+    \begin{itemize}
+        \item Less accurate at intermediate temperatures.
+        \item Introduciton of $\omega_{\text{cutoff}}$ is somewhat arbitrary.
+        \item Assumption of $\omega=vk$ becomes questionable for short wavelengths (high frequencies).
+        \item Metals have an additional T-linear contribution to C that is missed by the Debye model.
+    \end{itemize}
+    
+\end{itemize}
+
+
+\subsection{Drude Theory (Chapter 3)}
+
+\begin{itemize}
+    \item So far, we've talked about atomic vibrations (effectively, a property of the nucleus). next we are going to talk about the conduction of electricity (a property of the electrons).
+    \item What we already know from real life: some materials conduct electricity and are therefrore metals, and others do not. We are going to skip over (for now) what makes a material a metal and jump straight into understanding the properties of the conduction electrons.
+    \item Basic idea: Drude (Drew-duh) extended Boltzmann's kinetic theory of gases (see the ideal gas law) to the motion of electrons in a metal (no atoms, just a gas of electrons).
+\end{itemize}
+
+\textbf{Assumptions of the Drude model}
+\begin{itemize}
+    \item The basic assumptions of the Drude model are:
+    \begin{enumerate}
+        \item The electrons have some characteristic scattering time, $\tau$ (material dependent, average time between collisions). The probability of scattering in a time interval $dt$ is $P = \frac{dt}{\tau}$. (reasonable. note that it assumes nothing about nature of scattering).
+        \item After scattering, the electron has zero kinetic energy (i.e. $\vec{p} = 0$). This is questionable, but true on average.
+        \item The electrons will respond to externally applied electric and magnetic fields. This is reasonable, electrons are charged.
+    \end{enumerate}
+\end{itemize}
+
+
+\textbf{Equation of motion for the Drude Model}
+\begin{itemize}
+    \item In order to understand the behaviour of the conduction electrons, we will start by defining the average momentum for an electron, which depends on whether or not it experienced a scattering event.
+    
+    time $dt$ later: 
+    \[
+    \begin{aligned}
+    \avg{\vec{p}(t+dt)} &= \Prob_{\text{no scatter}} \cdot \vec{p}_{\text{no scatter}} + \Prob_{\text{scatter}} \cdot \vec{p}_{\text{scatter}} \\
+    &= \paren*{1-\frac{dt}{\tau}} \cdot \paren*{\vec{p}(t) + \vec{F}dt} + \paren*{\frac{dt}{\tau}} \cdot 0
+    \end{aligned}
+    \]
+
+    where $d\vec{p} = \vec{F} dt $ and Lorentz force $\vec{F} = -e (\vec{E} + \vec{v} \times \vec{B})$
+
+    \[ \avg{\vec{p}(t+dt)} = \vec{p}(t)-\frac{\vec{p}(t) dt}{\tau} + \vec{F}dt - \frac{\vec{F} dt^2}{\tau} \]
+
+
+    \item For $dt \ll 1$, we can keep only terms that are of first-order in $dt$:
+    
+    We get an equation of motion!
+    \[ \boxed{\frac{d\vec{p}}{d\tau} = \vec{F} - \frac{\vec{p}(t)}{\tau}} \]
+
+    last term acts like a drag forc on the electron.
+    
+    \item What does this give in the absence of any applied field? Does that make sense?
+    
+    \[ \vec{F} = 0 \Rightarrow \frac{d\vec{p}}{d\tau} = -\frac{\vec{p}(t)}{\tau} \]
+
+    \[ \vec{p}(t) = \vec{p}(0) \cdot \e^{-\frac{t}{\tau}} \]
+
+    which gives an expenential decay of the momentum of the electron to zero. In the model this makes sense, but in real life this is not the case.
+    
+\end{itemize}
+
+
+
+
+
+
+
+
