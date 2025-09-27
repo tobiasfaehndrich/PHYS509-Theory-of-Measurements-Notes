@@ -1,0 +1,131 @@
+\section[PHY509 – Problem Set 1]{\hyperlink{toc}{PHY509 – Problem Set 1}}
+
+\subsection*{Problem 1}
+\begin{quote}
+Prove that the conditional probability $P(\cdot\mid F)$, for any event $F$ in $S$, is indeed a probability (i.e., satisfies the axioms), where the dot represents the location of the function input. For example, one axiom is $P(S\mid F)=1$.
+\end{quote}
+
+\subsection*{Problem 2}
+\begin{quote}
+For any three events $E,F,G$, express $P(E\cup F\cup G)$ in terms of the probabilities for $E,F,G$, the pairwise intersections $E\cap F$, $F\cap G$, $E\cap G$, and the triple intersection $E\cap F\cap G$.
+\end{quote}
+
+\subsection*{Problem 3}
+\begin{quote}
+The following data were reported in a study of a group of 1000 people: there were 312 professionals, 470 married persons, 525 college graduates, 42 professional college graduates, 147 married college graduates, 86 married professionals, and 25 married professional college graduates. Show that the numbers reported in the study must be incorrect. Hint: Use the results of the previous problem.
+\end{quote}
+
+\subsection*{Problem 4}
+\begin{quote}
+Let $E,F,G$ be events. Find set expressions for the following events:
+\begin{enumerate}[label=(\alph*)]
+	\item only $E$ occurs;
+	\item both $E$ and $G$, but not $F$, occur;
+	\item at least one of the events occurs;
+	\item at least two of the events occur;
+	\item all three events occur;
+	\item none of the events occur;
+	\item at most one of the events occurs;
+	\item at most two of the events occur.
+\end{enumerate}
+\end{quote}
+
+\subsection*{Problem 5}
+\begin{quote}
+A pair of dice is rolled until a sum of 5 or 7 appears. Find the probability that a 5 occurs first. Hint: Calculate the probability of $E_n$ = the event that a 5 occurs on the $n$th roll and no 5 or 7 occurs on the first $n-1$ rolls. Combine these to create a union that represents the set of all the possible specified outcomes, and calculate its probability.
+\end{quote}
+
+\subsection*{Problem 6}
+\begin{quote}
+Suppose you have an experiment with sample space $S$ that you perform $n$ times. For any event $E\subseteq S$, let $n(E)$ be the number of times the event $E$ occurred, and define $f(E)=\dfrac{n(E)}{n}$. Show that $f(\cdot)$ is a probability.
+\end{quote}
+
+\subsection*{Problem 7}
+\begin{quote}
+Tchebysheff's Inequality: Let $g(x)$ be a nonnegative function of the random variable $x$, which has probability density $p(x)$ and variance $\sigma^2$. Show that, if $E\big[g(x)\big]$ is finite, then the set $\{x: g(x)\ge c\}$ satisfies
+\[
+	P\big(\{x: g(x)\ge c\}\big) \le \frac{1}{c}\, E\big[g(x)\big].
+\]
+In particular, set $g(x)=(x-E(x))^2$ and $c=\lambda^2\sigma^2$, and prove that the fraction of the distribution $p(x)$ that is more than $\lambda\sigma$ away from the mean satisfies
+\[
+	P\big(|x-E(x)|\ge \lambda\sigma\big) \le \frac{1}{\lambda^2}.
+\]
+This is known as the Tchebysheff inequality.
+\end{quote}
+
+\subsection*{Problem 8}
+\begin{quote}
+Write a program to simulate an experiment which has 100 independent Bernoulli trials, each with probability $p=0.2$ of success. That is, this pseudo-experiment has some random number of successes, with expected mean 20. Now write another loop that runs this pseudo-experiment $N$ times. Make a histogram of the pseudo-experiment results when $N=100$. Overlay a histogram of the Binomial distribution, suitably normalized to the number of entries $N$. Repeat for $N=1000$ and $N=100000$.
+\end{quote}
+
+\subsection*{Problem 9}
+\begin{quote}
+Prove that the correlation coefficient between any two variables satisfies $-1\le \rho(x,y)\le 1$.
+\end{quote}
+
+\subsection*{Problem 10}
+\begin{quote}
+Suppose you measure the position of an object on a plane as $(x,y)$, with uncertainties on the measurements $\sigma_x$, $\sigma_y$ that are uncorrelated. If you express the position in polar coordinates $(r,\theta)$ with $x=r\cos\theta$, $y=r\sin\theta$, what is the covariance matrix $V(r,\theta)$? Under what conditions is the covariance (and hence the correlation coefficient) between $r,\theta$ zero? When is it positive, and when negative? Draw sketches of the measurement uncertainty ellipses in the various cases to demonstrate the answer.
+\end{quote}
+
+\subsection*{Problem 11}
+\begin{quote}
+Given uncorrelated original probability densities for $x,y$ (i.e., $V_{ij}=\operatorname{diag}(\sigma_x^2,\sigma_y^2)$), find $\sigma_z=\sqrt{V_z}$ for the following functional transformations:
+\begin{enumerate}[label=(\alph*)]
+	\item $z=x^2$
+	\item $z=\sin(a x)$, where $a$ is a constant
+	\item $z=e^{-x/\tau}$, where $\tau$ is a constant
+	\item $z=\log x$
+	\item $z=x+y$
+	\item $z=x-y$
+	\item $z=x\,y$
+	\item $z=x/y$
+\end{enumerate}
+\end{quote}
+
+\subsection*{Problem 12}
+\begin{quote}
+Suppose you measure the voltage $V$ across a resistor of resistance $R$, and you estimate the square roots of the variances of the underlying probability distributions of the measurements to be $\sigma_V$ and $\sigma_R$, respectively. We then estimate the power $P=V^2/R$ and current $I=V/R$.
+\begin{enumerate}[label=(\alph*)]
+	\item Calculate the covariance matrix $V(P,I)$, starting from the covariance matrix $V(V,R)$ (sorry for the double use of the symbol $V$, but it should be clear from context which one is meant).
+	\item You can also express $P=VI$. So you could do the calculation in two steps: first calculate $I$, then calculate $P$ from $V$ and $I$, rather than from $V$ and $R$. Do this (i.e., first transform from $(V,R)$ to $(V,I)$, then transform those variables to $(P,I)$) and compare the final covariance matrix you get this way with the direct transformation.
+\end{enumerate}
+\end{quote}
+
+\subsection*{Problem 13}
+\begin{quote}
+The Geometric Distribution. Consider a Bernoulli process with probability of success in each trial being $p$.
+\begin{enumerate}[label=(\alph*)]
+	\item Show that the probability that the first success occurs on the $n$th trial is given by the geometric distribution
+	\[
+		P_1(n;p) = p\,(1-p)^{n-1}.
+	\]
+	Verify that this gives a properly normalized set of probabilities, i.e.,
+	\[
+		\sum_{n=1}^{\infty} P_1(n;p) = 1.
+	\]
+	\item Show that the mean and variance of this distribution are
+	\[
+		E(r)=\frac{1}{p}, \qquad V(r)=\frac{1-p}{p^2}.
+	\]
+	\item Make a plot of this distribution for $p=0.4$.
+\end{enumerate}
+\end{quote}
+
+% r−1
+
+\subsection*{Problem 14}
+\begin{quote}
+The Negative Binomial Distribution. Suppose, instead of the usual binomial situation in which we fix the number of trials $n$ and ask how many successes $r$ we get, we reverse the problem: we keep performing trials until we get $r$ successes and ask how many trials $n$ we had to make.
+\begin{enumerate}[label=(\alph*)]
+	\item Generalize the argument for the geometric distribution to show that the probability that the $r$th success is on the $n$th trial is given by the negative binomial distribution
+	\[
+		P_r(n;p) = {n-1 \choose r-1}\, p^r (1-p)^{n-r}, \qquad n=r, r+1,\ldots
+	\]
+	\item Show that the mean and variance of this distribution are
+	\[
+		E(n)=\frac{r}{p}, \qquad V(n)=\frac{r(1-p)}{p^2}.
+	\]
+	\item Make a plot of this distribution for $p=0.4,\ r=10$ and for $p=0.6,\ r=5$.
+\end{enumerate}
+\end{quote}

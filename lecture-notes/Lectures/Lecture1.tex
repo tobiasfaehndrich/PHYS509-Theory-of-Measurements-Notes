@@ -1,0 +1,189 @@
+\section{Foundations of Probability Theory}
+
+This lecture covered the course structure and grading.
+
+\subsection{Motivation: Stochastic Nature of Experimental Data}
+
+\begin{itemize}
+    \item Stochastic processes:
+          \begin{itemize}
+              \item muon decay
+              \item inherent stochasticity
+              \item quantum mechanics
+          \end{itemize}
+    \item Mostly concerned with measurement devices — how do we measure?
+    \item Example: a muon lifetime experiment
+          \begin{itemize}
+              \item Take a cosmic muon, detect light, and discriminate.
+              \item Muon decays into an electron and neutrinos, and the electron produces light.
+              \item Measure the time between light pulses.
+              \item Many factors cause noise in the data — results change even if the same mechanism occurs twice.
+          \end{itemize}
+\end{itemize}
+
+\subsection{Probabilistic Interpretation of Experimental Results}
+
+\begin{itemize}
+    \item Experiments are repeated trials.
+    \item Probability (probabilistic interpretation):
+          \begin{itemize}
+              \item Results are interpreted as the long-term average of repeating an experiment many times.
+              \item Example: coin flip
+                    \[ P(H) = \lim_{N\to\infty} \frac{n_H}{N} \]
+                    \[ n(H) = \text{number of heads in $N$ trials} \]
+          \end{itemize}
+\end{itemize}
+
+\subsection{Sample Spaces and Stochastic Variables}
+
+\begin{itemize}
+    \item In modern probability theory:
+          \begin{itemize}
+              \item 3 axioms (Kolmogorov)
+              \item Let $X$ be a stochastic variable.
+              \item Define sample space $S$ ($\Omega$):
+                    \[ S = \{x_1, x_2, ...\} \]
+              \item Examples:
+                    \begin{enumerate}
+                        \item Coin flip:
+                              \[ S = \{H, T\} \]
+                        \item Roll a die:
+                              \[ S = \{1, 2, 3, 4, 5, 6\} \]
+                        \item Grade in this class:
+                              \[ S = \{0, 1, 2, ..., 100\} \]
+                        \item Decay time of a radioactive atom:
+                              \[ S = [0, \infty) \]
+                    \end{enumerate}
+              \item $S$ can be finite (Binomial), countable (Poisson), or infinite (Gaussian, Uniform).
+          \end{itemize}
+\end{itemize}
+
+\subsection{Events and Set Operations}
+
+\begin{itemize}
+    \item Definition: An event $E$ is a subset of $S$.
+    \item Example: one die roll
+          \[ S = \{1, 2, 3, 4, 5, 6\} \]
+          \[ E = \text{rolling an even number} = \{2, 4, 6\} \]
+    \item Example: $E$ = atom decayed by time $t_0$
+          \[ S = [0, t_0] \]
+
+    \item Operations on events:
+          \begin{itemize}
+              \item Union (OR) and Intersection (AND)
+              \item Let $A, B$ be events in $S$:
+                    \[ E = A \cup B = \{e: e \in A \text{ or } e \in B \text{ (or both)}\} \]
+              \item Example: flip a coin twice
+                    \[ S = \{HH, HT, TH, TT\} \]
+                    \[ A = \text{1st flip is H} = \{HH, HT\} \]
+                    \[ B = \text{2nd flip is H} = \{HH, TH\} \]
+                    \[ A \cup B = \{HH, HT, TH\} \]
+                    \[ A \cap B = \{ e \mid e \in A \text{ and } e \in B \} = \{HH\} \]
+                    \[ AB = A \cap B \]
+                    \[ A^c = \{ e \mid e \in S \text{ and } e \notin A \} = \{TH, TT\} \]
+          \end{itemize}
+
+    \item Properties:
+          \begin{itemize}
+              \item Commutative:
+                    \[ A \cup B = B \cup A, \quad AB = BA \]
+              \item Associative:
+                    \[ A \cup (B \cup C) = (A \cup B) \cup C , \quad (AB)C = A(BC) \]
+              \item Distributive:
+                    \[ (A\cup B)C = AC \cup BC, \quad A(B \cup C) = AB \cup AC \]
+              \item De Morgan's Laws:
+                    \[ (A \cup B)^c = A^c B^c, \quad (AB)^c = A^c \cup B^c \]
+          \end{itemize}
+\end{itemize}
+
+\subsection{Kolmogorov's Axioms of Probability}
+
+\begin{itemize}
+    \item A function $P$ on $S$ is a probability measure if it satisfies:
+          \begin{enumerate}
+              \item $P(S) = 1$
+              \item $P(\emptyset) = 0$
+              \item For any countable sequence of disjoint events $E_1, E_2, ...$ in $S$:
+                    \[ E_i E_j = \emptyset \text{ for } i \neq j \]
+                    \[ P\left( \cup_{i=1}^{\infty} E_i \right) = \sum_{i=1}^{\infty} P(E_i) \]
+          \end{enumerate}
+\end{itemize}
+
+\subsection{Consequences of the Probability Axioms}
+
+\begin{itemize}
+    \item \[ P(\emptyset) = 0 \]
+          Let \[ E_1 = S, \quad E_2 = \emptyset \]
+          \[ E_1 E_2 = \emptyset \]
+          \[ P(S\cup \emptyset) = P(S) + P(\emptyset) = 1 + P(\emptyset) \]
+          \[ P(S) = 1 , \, P(\emptyset) = 0 \]
+
+    \item \[ P(E^c) = 1 - P(E) \]
+          \[ 1 = P(S) = P(E\cup E^c ) = P(E) + P(E^c) \]
+
+    \item If $B \subset A$, then:
+          \[ P(B) \leq P(A) \]
+          \[ A = B \cup (B^c A) \]
+          \[ P(A) = P(B \cup (B^c A)) \]
+          \[ P(B) = P(A) - P(B^c A) \leq P(A) \]
+
+    \item \[ P(A \cup B) = P(A) + P(B) - P(AB) \]
+          If we let the areas of the Venn diagram be 1 (A), 2 (A+B), 3 (B), then:
+          \[ A \cup B = 1 \cup 2 \cup 3 \]
+          \[ P(A\cup B) = P(1 \cup 2 \cup 3) = P(1) + P(2) + P(3) \]
+          \[ P(A) = P(1) + P(2), \quad P(B) = P(2) + P(3) \]
+          \[ P(A) + P(B) - P(2)  = P(1) + P(2) + P(3) = P(A \cup B) \]
+          \[ \text{equivalently } P(A) + P(B) - P(AB) = P(A) + P(B) - P(AB) \]
+\end{itemize}
+
+\subsection{Uniform Probability on Finite Sample Spaces}
+
+\begin{itemize}
+    \item \[ E_i = S_i \text{ for } i = 1, 2, ... n \]
+          \[ E_i E_j = \emptyset \text{ for } i \neq j \]
+          \[ S = \cup_{i=1}^{n} E_i \]
+          \[ P(S) = 1 = P(\cup_{i=1}^{n} E_i) = \sum_{i=1}^{n} P(E_i) \]
+          \[ P (E_i) = P(E_j) \quad \text{all equally likely} \]
+          \[ 1 = \sum_{i=1}^{N} P(E_i) = N P(E_i) \]
+          \[ P(E_i) = \frac{1}{N} = P(E_j) \]
+          \[ N = |S| = \text{number of elements in (cardinality of) } S \]
+          \[ F \text{ be any event (set) in } S \text{ with } k \text{ elements} \quad |F| = k \]
+          \[ P(F) = P(\cup_{S_i \in F} \{E_i\}) = \sum_{i=1}^{k} P(E_j) = \sum_{i=1}^{k} \frac{1}{N} = \frac{k}{N} = \frac{|F|}{|S|} \]
+\end{itemize}
+
+\subsection{Example: Probability of a Straight in Poker}
+
+\begin{itemize}
+    \item Example: 5-card poker hand forming a straight
+          \[ S = \{ (AC, 2C, 3C, 4C, 5C), (2C, 3C, 4C, 5C, 6C), ...\} \]
+          \[ S = \binom{52}{5} = \frac{52!}{5! \, 47!} = 2,598,960 \]
+    \item Event = straight = 5 consecutive cards, not of the same suit, any starting card.
+          \[ 10 ( 4^5 - 4) = 10200 \]
+    \item Starting cards: Ace (A,2,3,4,5), 2 (2,3,4,5,6), ..., 10 (10,J,Q,K,A)
+    \item Not all the same suit: $4^5 - 4$ (exclude all same suit)
+          \[ P (\text{straight}) = \frac{10(4^5 - 4)}{\binom{52}{5}} = 0.00392465 \]
+\end{itemize}
+
+\subsection{Conditional Probability}
+
+\begin{itemize}
+    \item Given 2 events $E, F$, sample space $S$:
+          \[ P(E) = \text{probability of a trial from } S \text{ in } E \]
+          \[ P(F) = \text{probability of a trial from } S \text{ in } F \]
+    \item Conditional probability of $E$ given $F$ has occurred:
+          \[ P(E|F) = \text{probability of a trial from } S \text{ in } E, \text{ given the trial is in } F \]
+    \item Note: $P(EF)$ is the probability of a trial from $S$ in both $E$ and $F$.
+    \item Need to normalize by $P(F)$, so we define:
+          \[ P(E|F) = \frac{P(EF)}{P(F)} \quad \text{if } P(F) > 0 \]
+          \[ P(EF) = P(E|F) P(F) \]
+
+    \item Example: flip a coin 2 times
+          \[ S = \{HH, HT, TH, TT\} \]
+          Conditional probability of $HH \equiv A$ given:
+          \begin{itemize}
+              \item First flip $= H \equiv B = \{HH, HT\}$
+              \item Either flip is $H \equiv C = \{HH, HT, TH\}$
+                    \[ P(A|B) = \frac{P(AB)}{P(B)} = \frac{P(\{HH\})}{P(\{HH, HT\})} = \frac{\frac{1}{4}}{\frac{1}{2}} = \frac{1}{2} \]
+                    \[ P(A|C) = \frac{P(AC)}{P(C)} = \frac{P(\{HH\})}{P(\{HH, HT, TH\})} = \frac{\frac{1}{4}}{\frac{3}{4}} = \frac{1}{3} \]
+          \end{itemize}
+\end{itemize}

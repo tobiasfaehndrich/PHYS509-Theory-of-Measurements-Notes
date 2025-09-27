@@ -1,0 +1,163 @@
+\section{Covariance Transformations and the Binomial Distribution}
+
+Tuesday, September 25th 2025
+
+\subsection{Covariance Transformation Under Linear Transformations}
+
+\begin{itemize}
+    \item Linear transformation:
+          \[ \vec{y} = A\vec{x} \]
+          \[ V_{kl}(\vec{y}) = \sum_{i,j} \pdv{y_k}{x_i} \pdv{y_l}{x_j} V_{ij}(\vec{x}) \]
+    \item Linear $y_k = \sum A_{kj} x_j$
+    \item then
+          \[ V_{kl}(\vec{y}) = \sum_{i,j} A_{ki} A_{lj} V_{ij}(\vec{x}) \]
+    \item or in matrix form
+          \[ V(\vec{y}) = \left(A V(\vec{x}) A^T\right)_{kl} \]
+
+          \subsubsection*{Diagonalization via Eigenvectors}
+
+    \item If $\hat{e}_i$ are the eigenvectors of $V$, then
+          \[ V (\vec{x})\hat{e}_i = \lambda_i \hat{e}_i \]
+    \item Form:
+          \[ A = \begin{pmatrix}
+                  \hat{e}_1 \\
+                  \ldots    \\
+                  \hat{e}_n
+              \end{pmatrix}
+              = \begin{pmatrix}
+                  \hat{e}_{11} & \hat{e}_{12} & \ldots & \hat{e}_{1n} \\
+                  \ldots       & \ldots       & \ldots & \ldots       \\
+                  \hat{e}_{n1} & \hat{e}_{n2} & \ldots & \hat{e}_{nn}
+              \end{pmatrix} \]
+    \item then
+          \[ A^T A = I \]
+    \item then:
+          \[ V A^T = V \begin{pmatrix}
+                  \hat{e}_1 & \ldots \\
+                  \ldots    & \ldots \\
+                  \hat{e}_n & \ldots
+              \end{pmatrix} = \begin{pmatrix}
+                  \lambda_1 \hat{e}_{11} & \ldots & \lambda_n \hat{e}_{n1} \\
+                  \ldots                 & \ldots & \ldots                 \\
+                  \lambda_1 \hat{e}_{1n} & \ldots & \lambda_n \hat{e}_{nn}
+              \end{pmatrix} \]
+
+    \item Then:
+          \[ A V A^T = \begin{pmatrix}
+                  \hat{e}_{11} & \ldots & \hat{e}_{1n} \\
+                  \ldots       & \ldots & \ldots
+              \end{pmatrix}
+              \begin{pmatrix}
+                  \lambda_1 \hat{e}_{11} & \ldots          \\
+                  \ldots                 & \ldots & \ldots \\
+                  \lambda_1 \hat{e}_{1n} & \ldots
+              \end{pmatrix}
+              = \begin{pmatrix}
+                  \lambda_1 & 0         & \ldots & 0         \\
+                  0         & \lambda_2 & \ldots & 0         \\
+                  \ldots    & \ldots    & \ldots & \ldots    \\
+                  0         & 0         & \ldots & \lambda_n
+              \end{pmatrix} \]
+
+    \item Then:
+          \[ AVA^T = V(\vec{y}) = \begin{pmatrix}
+                  \sigma_1^2 & 0          & \ldots & 0          \\
+                  0          & \sigma_2^2 & \ldots & 0          \\
+                  \ldots     & \ldots     & \ldots & \ldots     \\
+                  0          & 0          & \ldots & \sigma_n^2
+              \end{pmatrix} \]
+\end{itemize}
+
+\subsection{The Binomial Distribution}
+
+\begin{itemize}
+    \item Consider an experiment with two outcomes.
+    \item E.g. coin flips, selecting a ball with 2 possible colours, etc.
+    \item One trial is called a Bernoulli trial.
+
+          \subsubsection*{Bernoulli Trials and Sampling Methods}
+
+    \item Example -- Method 1: You have an urn filled with $N$ balls. Some are red (R), some are blue (B).
+    \item (0) What is your estimate of $n_R$, $n_B$, or $f = n_R/N$ or $p$ of drawing R?
+    \item (1) You pick a ball: R. Q: estimate of $p = n_R/N$?
+    \item (2) You pick another without replacing 1st ball: get R.
+    \item (3) R
+    \item (4) Get B
+    \item This is a question about this ONE urn.
+
+    \item Now Method 2: you draw red, and you PUT IT BACK. You repeat this several times.
+    \item Now Method 3: We have an infinite source of balls with fraction $p$ red and $(1-p)$ blue.
+          \begin{align*}
+              P(R) & = p   \\
+              P(B) & = 1-p
+          \end{align*}
+
+          \subsubsection*{Derivation of the Binomial Probability}
+
+    \item Make infinite number of urns all with $N$ balls, with fraction $p$ red and $(1-p)$ blue.
+    \item Open all, count $n_R$ red balls, $n_B$ blue balls.
+    \item In our case we have $N$ balls, prob $p=R$ and $1-p=q=B$.
+    \item Prob of getting sequence RRB is:
+          \[ P(RRB) = p \cdot p \cdot (1-p) = p^2 (1-p) \]
+    \item If we don't care about order, then:
+          \[ P(RRB) = P(RBR) = P(BRR) = p^2 (1-p) \]
+    \item There are 3 ways of ordering RRB, so total probability is:
+          \[ P(2R,1B) = 3 p^2 (1-p) = 3 p^2 q \]
+    \item Number of ways to choose $r$ items from $N$ is:
+          \[ \binom{N}{r} = \frac{N!}{r!(N-r)!} \]
+    \item Probability of getting exactly $r$ R out of $N$:
+          \[ P_r = \binom{N}{r} p^r (1-p)^{N-r} = B(r;N,p) \]
+    \item This is called the Binomial distribution and applies to anything where there are 2 outcomes ($A, \bar{A}$).
+
+          \subsubsection*{Mean and Variance of the Binomial Distribution}
+
+    \item Want mean, $\sigma$
+          \begin{align*}
+              E(r) & = \sum_{r=0}^n r P_r = \sum_{r=0}^n r \binom{n}{r} p^r (1-p)^{n-r} \\
+                   & = \sum_{r=0}^n r \frac{n!}{r!(n-r)!} p^r (1-p)^{n-r}               \\
+                   & = \sum_{r=1}^n \frac{n!}{(r-1)!(n-r)!} p^r (1-p)^{n-r}             \\
+                   & = np \sum_{r=1}^n \frac{(n-1)!}{(r-1)!(n-r)!} p^{r-1} (1-p)^{n-r}
+          \end{align*}
+    \item Change sum $r' = r-1$ $\rightarrow n' = n-1$
+          \begin{align*}
+              E(r) & = np \sum_{r'=0}^{n-1} \frac{(n-1)!}{r'!(n-1-r')!} p^{r'} (1-p)^{(n-1)-r'} \\
+                   & = np \sum_{r'=0}^{n-1} \binom{n-1}{r'} p^{r'} (1-p)^{n'-r'}                \\
+                   & = np \cdot 1 = np
+          \end{align*}
+
+    \item from:
+          \[ (p+q)^n = \sum_{r=0}^n \binom{n}{r} p^r q^{n-r} \]
+          \[ (p+1-q)^n = 1^n = 1 \]
+          \[ E(r) = np \]
+    \item This is what we want!
+    \item Now:
+          \[ V(r) = \sum r^2 p_r - E(r)^2 = \sum r^2 p_r - n^2 p^2 \]
+    \item Slightly easier to calculate:
+          \[ \sum r(r-1) p_r = \sum_{r=0}^n r(r-1) \frac{n!}{r!(n-r)!} p^r (1-p)^{n-r} = \sum_{r=2}^n \frac{n!}{(r-2)!(n-r)!} p^r q^{n-r} \]
+          \[ = n(n-1) p^2 \sum_{r=2}^n \frac{(n-2)!}{(r-2)!(n-r)!} p^{r-2} q^{n-r} \]
+    \item Sub $r' = r-2$
+          \[ = n(n-1) p^2 \sum_{r'=0}^{n-2} \binom{n-2}{r'} p^{r'} q^{(n-2)-r'} \]
+          \[ = n(n-1)p^2 \cdot 1 = n(n-1)p^2 \]
+          \[ = n^2 p^2 - np^2 \]
+    \item Such that:
+          \[ \boxed{V(r) = \sum r^2 p_r - n^2 p^2 } = np (1 - p) = npq \]
+
+          \subsubsection*{Applications to Histograms and Counting Statistics}
+
+    \item Why is this important? Histograms are often Binomially distributed.
+    \item Data either falls $A$: falls in bin, or $\bar{A}$: does not fall in bin.
+    \item $p =$ probability of falling in $i$th bin.
+    \item $+n$ entries, e.g. students in class, histogram = grades.
+    \item Expected number of entries is $np$.
+    \item Plot of taking distribution several times and checking how many fall in bin $i$ and then plotting that distribution is Binomial.
+    \item Usually you have 1 histogram.
+    \item Look at entries in bin $i$ -- $n_i/n$ = fraction of entries in bin $i$.
+    \item Estimator $p = n_i/n$.
+    \item Expect if you repeated $\Rightarrow$ $n_i$ would follow Binomial distribution with mean $\sigma_i = \sqrt{n p q}$ and $V_i = \sigma_i^2 = np (1 - p)$.
+    \item \[ p = \frac{n_i}{n} \]
+    \item \[ \boxed{\sigma_i = \sqrt{n_i \left(1 - \frac{n_i}{n}\right)}} \approx \sqrt{n_i} \text{ if } n \gg n_i \]
+
+    \item Notes: we do know the total number $n$, how often is it in bin $i$.
+    \item HW: given the distribution, how many times $n$ do I need to do it to get that.
+    \item $r$ fixed $n$, vs. $n$ fixed $r$.
+\end{itemize}

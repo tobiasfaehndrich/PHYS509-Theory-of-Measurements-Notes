@@ -1,9 +1,54 @@
 \hypertarget {toc}{}
-\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
-\contentsline {section}{\numberline {2}Heat Capacity Models I — Boltzmann and Einstein}{3}{section.2}%
-\contentsline {section}{\numberline {3}Heat Capacity Models II — Einstein Revisited and Debye}{6}{section.3}%
-\contentsline {section}{\numberline {4}Heat Capacity Models III — Drude Model}{10}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Drude Theory (Chapter 3)}{11}{subsection.4.1}%
-\contentsline {section}{\numberline {5}Electrical conductivity and the Hall effect}{13}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Electrical conductivity in the Drude model}{13}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Hall Effect}{14}{subsection.5.2}%
+\contentsline {section}{\numberline {1}Foundations of Probability Theory}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Motivation: Stochastic Nature of Experimental Data}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Probabilistic Interpretation of Experimental Results}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Sample Spaces and Stochastic Variables}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Events and Set Operations}{4}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Kolmogorov's Axioms of Probability}{4}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Consequences of the Probability Axioms}{5}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Uniform Probability on Finite Sample Spaces}{5}{subsection.1.7}%
+\contentsline {subsection}{\numberline {1.8}Example: Probability of a Straight in Poker}{6}{subsection.1.8}%
+\contentsline {subsection}{\numberline {1.9}Conditional Probability}{6}{subsection.1.9}%
+\contentsline {section}{\numberline {2}Bayesian Inference and Random Variables}{7}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Bayes' Formula}{7}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Law of Total Probability}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Independent Events}{7}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Example: Rolling Two Dice}{8}{subsubsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.4}Random Variables and Probability Distributions}{8}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Describing a Distribution}{9}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Cumulative Distribution Function (CDF)}{9}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Expectation Values}{9}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Characteristic Function}{9}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Central Moments}{10}{subsection.2.9}%
+\contentsline {section}{\numberline {3}Bayesian Reasoning and Probability Distributions}{11}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Bayes Theorem and Its Applications}{11}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}The Monty Hall Problem: A Bayesian Analysis}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Alternate Monty Hall Formulations}{12}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Monty Hall Generalized to n Doors}{12}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Continuous Probability Distributions and Moments}{13}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Discrete Probability Distributions}{13}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Cumulative Distribution Functions}{14}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Multivariate Distributions and Covariance}{14}{subsection.3.8}%
+\contentsline {section}{\numberline {4}Joint Distributions, Correlations, and Variable Transformations}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Conditional Probability: A Simple Example}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Distributions of Multiple Random Variables}{15}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Covariance Matrix and Correlation Coefficient}{15}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Independence and Uncorrelated Variables}{16}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Examples of Correlated and Uncorrelated Variables}{16}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Marginal Distributions}{17}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Change of Variables in Probability Densities}{17}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Change of Variables: Non One-to-One Case}{18}{subsection.4.8}%
+\contentsline {subsection}{\numberline {4.9}Multivariate Transformations and the Jacobian}{18}{subsection.4.9}%
+\contentsline {subsection}{\numberline {4.10}Example: Cartesian to Polar Transformation}{18}{subsection.4.10}%
+\contentsline {section}{\numberline {5}Propagation of Uncertainty in Measurements}{20}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Propagation of Errors for a Single Variable}{20}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Variance Propagation for a Single Variable}{20}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Propagation of Errors for Multiple Variables}{21}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Covariance Propagation for Functions of Multiple Variables}{21}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Examples of Error Propagation in Measurements}{22}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Matrix Formulation of Linear Error Propagation}{22}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Variance of the Arithmetic Mean}{22}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}Example: Measuring the Period of a Sine Wave}{23}{subsection.5.8}%
+\contentsline {section}{\numberline {6}Covariance Transformations and the Binomial Distribution}{24}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Covariance Transformation Under Linear Transformations}{24}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}The Binomial Distribution}{25}{subsection.6.2}%
