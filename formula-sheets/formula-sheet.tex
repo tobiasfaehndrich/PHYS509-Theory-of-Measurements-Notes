@@ -1,0 +1,355 @@
+\documentclass[10pt, twocolumn]{article}
+\usepackage{commands}
+\usepackage{multicol}
+
+\hypersetup{colorlinks = true}
+
+\title{PHYS509 Formula Sheet - Theory of Measurements}
+\author{Tobias Faehndrich}
+\date{September 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Lecture 1: Foundations of Probability Theory}
+
+\subsection{Basics}
+
+\begin{itemize}
+    \item $P(A \cap B) = $ probability of both A and B occurring
+    \item $P(A \cup B) = $ probability of either A or B occurring (or both)
+    \item $P(A^c) = $ probability of A not occurring
+    \item Disjoint events: $A \cap B = \emptyset$
+    \item Events: subsets of sample space $S$
+    \item Sample space: set of all possible outcomes
+    \item Complement: $A^c = S \setminus A$
+    \item Independent events: $P(A \cap B) = P(A)P(B)$
+\end{itemize}
+
+\subsection{Kolmogorov's Axioms}
+For probability measure $P$ on sample space $S$:
+\begin{enumerate}
+    \item $P(S) = 1$
+    \item $P(\emptyset) = 0$
+    \item For disjoint events $E_1, E_2, \ldots$:
+          \[ P\left( \bigcup_{i=1}^{\infty} E_i \right) = \sum_{i=1}^{\infty} P(E_i) \]
+\end{enumerate}
+
+\subsection{Key Consequences}
+\begin{align}
+    P(E^c)      & = 1 - P(E)                        \\
+    P(A \cup B) & = P(A) + P(B) - P(A \cap B)       \\
+    P(B)        & \leq P(A) \text{ if } B \subset A
+\end{align}
+
+\subsection{Uniform Probability}
+For finite sample space with $N$ equally likely outcomes:
+\[ P(E) = \frac{|E|}{|S|} = \frac{\text{favorable outcomes}}{\text{total outcomes}} \]
+
+\subsection{Conditional Probability}
+\[ P(E|F) = \frac{P(E \cap F)}{P(F)} \quad \text{for } P(F) > 0 \]
+
+\subsection{Set Operations}
+\begin{align}
+    A \cup B & = \{x : x \in A \text{ or } x \in B\}  \\
+    A \cap B & = \{x : x \in A \text{ and } x \in B\} \\
+    A^c      & = \{x \in S : x \notin A\}
+\end{align}
+
+\subsection{De Morgan's Laws}
+\begin{align}
+    (A \cup B)^c & = A^c \cap B^c \\
+    (A \cap B)^c & = A^c \cup B^c
+\end{align}
+
+\section{Lecture 2: Bayesian Inference and Random Variables}
+
+\subsection{Bayes' Theorem}
+\[ P(A|B) = \frac{P(B|A) P(A)}{P(B)} \]
+
+\subsection{Law of Total Probability}
+For partition $\{A_1, A_2, \ldots, A_n\}$ of $S$:
+\[ P(B) = \sum_{i=1}^{n} P(B|A_i) P(A_i) \]
+
+\subsection{Independence}
+Events $A$ and $B$ are independent if:
+\[ P(A \cap B) = P(A) P(B) \]
+Equivalently: $P(A|B) = P(A)$ (when $P(B) > 0$)
+
+\subsection{Random Variables}
+A random variable $X$ is a function $X: S \to \mathbb{R}$
+
+\subsection{Probability Mass Function (PMF)}
+For discrete random variable $X$:
+\[ p_X(k) = P(X = k) \]
+Properties:
+\begin{align}
+    p_X(k)        & \geq 0 \text{ for all } k \\
+    \sum_k p_X(k) & = 1
+\end{align}
+
+\subsection{Cumulative Distribution Function (CDF)}
+\[ F_X(x) = P(X \leq x) \]
+
+\section{Lecture 3: Bayesian Reasoning and Probability Distributions}
+
+\subsection{Continuous Random Variables}
+\subsubsection{Probability Density Function (PDF)}
+\[ f_X(x) \geq 0, \quad \int_{-\infty}^{\infty} f_X(x) dx = 1 \]
+\[ P(a \leq X \leq b) = \int_a^b f_X(x) dx \]
+
+\subsubsection{Relationship to CDF}
+\[ F_X(x) = \int_{-\infty}^x f_X(t) dt \]
+\[ f_X(x) = \frac{dF_X(x)}{dx} \]
+
+\subsection{Expectation Value}
+\begin{align}
+    \text{Discrete: } E[X]   & = \sum_k k \cdot p_X(k)               \\
+    \text{Continuous: } E[X] & = \int_{-\infty}^{\infty} x f_X(x) dx
+\end{align}
+
+\subsection{Variance}
+\begin{align}
+    \text{Var}(X) & = E[(X - E[X])^2]   \\
+                  & = E[X^2] - (E[X])^2
+\end{align}
+
+\subsection{Standard Deviation}
+\[ \sigma_X = \sqrt{\text{Var}(X)} \]
+
+\subsection{Important Distributions}
+
+\subsubsection{Uniform Distribution}
+\[ f(x) = \begin{cases}
+        \frac{1}{b-a} & a \leq x \leq b  \\
+        0             & \text{otherwise}
+    \end{cases} \]
+\[ E[X] = \frac{a+b}{2}, \quad \text{Var}(X) = \frac{(b-a)^2}{12} \]
+
+\subsubsection{Exponential Distribution}
+\[ f(x) = \lambda e^{-\lambda x}, \quad x \geq 0 \]
+\[ E[X] = \frac{1}{\lambda}, \quad \text{Var}(X) = \frac{1}{\lambda^2} \]
+
+\subsubsection{Normal (Gaussian) Distribution}
+\[ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \]
+\[ E[X] = \mu, \quad \text{Var}(X) = \sigma^2 \]
+
+\subsection{Characteristic Function}
+
+\[\phi_X(t) = E[e^{itX}] = \begin{cases} \int_{-\infty}^{\infty} e^{itx} f_X(x) \,dx & \text{for continuous } X \\ \sum_{k} e^{itx_k} p_X(x_k) & \text{for discrete } X \end{cases} \]
+
+Properties:
+\begin{itemize}
+    \item $\phi_X(0) = 1$
+    \item For independent $X, Y$: $\phi_{X+Y}(t) = \phi_X(t) \phi_Y(t)$
+    \item Moments: $E[X^n] = \frac{1}{i^n} \phi_X^{(n)}(0)$
+\end{itemize}
+
+\subsection{Moments}
+
+\subsubsection{Raw Moments}
+The $n$-th raw moment:
+\[ \mu_n' = E[X^n] = \begin{cases}
+        \sum_k x_k^n p_X(x_k)                  & \text{discrete}   \\
+        \int_{-\infty}^{\infty} x^n f_X(x)\,dx & \text{continuous}
+    \end{cases} \]
+
+\subsubsection{Calculating Moments from Characteristic Function}
+\[ E[X^n] = \frac{\phi_X^{(n)}(0)}{i^n} \]
+
+\subsubsection{Central Moments}
+The $n$-th central moment:
+\[ \mu_n = E[(X-\mu)^n] \]
+\begin{itemize}
+    \item $\mu_0 = 1$ (by definition)
+    \item $\mu_1 = 0$ (by definition)
+    \item $\mu_2 = \text{Var}(X) = \sigma^2$
+    \item $\mu_3$ related to skewness
+    \item $\mu_4$ related to kurtosis
+\end{itemize}
+
+\subsubsection{Standardized Moments}
+\begin{align}
+    \text{Skewness: } \gamma_1 & = \frac{\mu_3}{\sigma^3} = E\left[\left(\frac{X-\mu}{\sigma}\right)^3\right] \\
+    \text{Kurtosis: } \gamma_2 & = \frac{\mu_4}{\sigma^4} = E\left[\left(\frac{X-\mu}{\sigma}\right)^4\right]
+\end{align}
+
+\subsubsection{Moment Generating Function (MGF)}
+\[ M_X(t) = E[e^{tX}] = \sum_{n=0}^{\infty} \frac{t^n}{n!} E[X^n] \]
+Property: $M_X^{(n)}(0) = E[X^n]$
+
+Note: MGF uses real $t$, while characteristic function uses imaginary $it$.
+
+\section{Lecture 4: Joint Distributions, Correlations, and Variable Transformations}
+
+\subsection{Joint Probability}
+\subsubsection{Discrete Case}
+\[ p_{X,Y}(x,y) = P(X = x, Y = y) \]
+
+\subsubsection{Continuous Case}
+\[ f_{X,Y}(x,y) \geq 0, \quad \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f_{X,Y}(x,y) dx dy = 1 \]
+
+\subsection{Marginal Distributions}
+\begin{align}
+    p_X(x) & = \sum_y p_{X,Y}(x,y)                     \\
+    f_X(x) & = \int_{-\infty}^{\infty} f_{X,Y}(x,y) dy
+\end{align}
+
+\subsection{Independence}
+Random variables $X$ and $Y$ are independent if:
+\[ f_{X,Y}(x,y) = f_X(x) f_Y(y) \]
+
+\subsection{Convolution Formula}
+For independent random variables $X$ and $Y$, the distribution of their sum $Z = X + Y$ is:
+
+\[ P(Z = k) = \begin{cases}
+        \sum_{r=0}^{k} P(X = r) \cdot P(Y = k - r)      & \text{discrete}        \\
+        \int_{-\infty}^{\infty} f_X(x) f_Y(z - x) \, dx & \text{continuous}      \\
+        \int_{-\infty}^{\infty} f_X(z - y) f_Y(y) \, dy & \text{also continuous}
+    \end{cases} \]
+
+\textbf{Note:} Convolution is much easier using characteristic functions:
+\[ \phi_{X+Y}(t) = \phi_X(t) \cdot \phi_Y(t) \]
+
+\subsection{Covariance}
+\[ \text{Cov}(X,Y) = E[(X - E[X])(Y - E[Y])] = E[XY] - E[X]E[Y] \]
+
+\subsection{Correlation Coefficient}
+\[ \rho(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} \]
+Property: $-1 \leq \rho(X,Y) \leq 1$
+
+\subsection{Covariance Matrix}
+\[ V = \begin{pmatrix}
+        \text{Var}(X)   & \text{Cov}(X,Y) \\
+        \text{Cov}(Y,X) & \text{Var}(Y)
+    \end{pmatrix} \]
+
+\section{Lecture 5: Propagation of Uncertainty in Measurements}
+
+\subsection{Linear Transformation}
+For $z = ax + b$:
+\[ \sigma_z^2 = a^2 \sigma_x^2 \]
+
+\subsection{General Function of One Variable}
+For $z = f(x)$ and small $\sigma_x$:
+\[ \sigma_z^2 \approx \left(\frac{df}{dx}\bigg|_{x=\mu_x}\right)^2 \sigma_x^2 \]
+
+\subsection{Function of Multiple Variables}
+For $z = f(x,y)$:
+\[ \sigma_z^2 \approx \left(\frac{\partial f}{\partial x}\right)^2 \sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2 \sigma_y^2 + 2\frac{\partial f}{\partial x}\frac{\partial f}{\partial y}\text{Cov}(x,y) \]
+
+\subsection{Common Cases}
+\begin{align}
+    z = x + y: \quad       & \sigma_z^2 = \sigma_x^2 + \sigma_y^2 + 2\text{Cov}(x,y)                                                \\
+    z = x - y: \quad       & \sigma_z^2 = \sigma_x^2 + \sigma_y^2 - 2\text{Cov}(x,y)                                                \\
+    z = xy: \quad          & \frac{\sigma_z^2}{z^2} = \frac{\sigma_x^2}{x^2} + \frac{\sigma_y^2}{y^2} + \frac{2\text{Cov}(x,y)}{xy} \\
+    z = \frac{x}{y}: \quad & \frac{\sigma_z^2}{z^2} = \frac{\sigma_x^2}{x^2} + \frac{\sigma_y^2}{y^2} - \frac{2\text{Cov}(x,y)}{xy}
+\end{align}
+
+\section{Lecture 6: Covariance Transformations and the Binomial Distribution}
+
+\subsection{Linear Transformation of Covariance Matrix}
+For $\vec{z} = A\vec{x}$:
+\[ V_z = A V_x A^T \]
+
+\subsection{General Transformation}
+For $\vec{z} = f(\vec{x})$, the Jacobian matrix $J$ has elements:
+\[ J_{ij} = \frac{\partial z_i}{\partial x_j} \]
+Then: $V_z \approx J V_x J^T$
+
+\subsection{Binomial Distribution}
+\[ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} \]
+\[ E[X] = np, \quad \text{Var}(X) = np(1-p) \]
+
+\subsection{Poisson Distribution}
+\[ P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!} \]
+\[ E[X] = \lambda, \quad \text{Var}(X) = \lambda \]
+
+\subsection{Central Limit Theorem}
+For large $n$, the sum of independent random variables approaches a normal distribution:
+\[ \frac{\sum_{i=1}^n X_i - n\mu}{\sqrt{n}\sigma} \xrightarrow{d} N(0,1) \]
+
+\section{Key Constants and Identities}
+
+\subsection{Combinatorics}
+\[ \binom{n}{k} = \frac{n!}{k!(n-k)!} \]
+
+\subsection{Gaussian Integrals}
+\[ \int_{-\infty}^{\infty} e^{-ax^2} dx = \sqrt{\frac{\pi}{a}} \]
+
+\subsection{Standard Normal Distribution}
+\[ \Phi(z) = P(Z \leq z) \text{ where } Z \sim N(0,1) \]
+
+
+\section{Lecture 8: The Gaussian Distribution and CLT}
+
+\subsection{Gaussian Properties}
+\begin{itemize}
+    \item \textbf{PDF}: $G(x|\mu, \sigma) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-\frac{(x - \mu)^2}{2 \sigma^2}}$
+    \item \textbf{Expectation}: $E[x] = \mu$
+    \item \textbf{Variance}: $V(x) = \sigma^2$
+    \item \textbf{Kurtosis}: $E\left[\left(\frac{x-\mu}{\sigma}\right)^4\right] = 3$ (Excess kurtosis = 0)
+\end{itemize}
+
+\subsection{Central Limit Theorem (CLT)}
+For $n$ independent random variables $x_i$ with mean $\mu$ and variance $\sigma^2$, the sample mean $\bar{x} = \frac{1}{n} \sum x_i$ approaches a normal distribution as $n \to \infty$:
+\[ \bar{x} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right) \]
+
+\subsection{Error Function}
+The cumulative distribution of a Gaussian can be expressed using the error function:
+\begin{align}
+    \text{erf}(t)  & = \frac{2}{\sqrt{\pi}} \int_0^t e^{-y^2} dy                          \\
+    \text{erfc}(t) & = 1 - \text{erf}(t) = \frac{2}{\sqrt{\pi}} \int_t^\infty e^{-y^2} dy
+\end{align}
+
+\subsection{Gaussian Confidence Intervals}
+The probability of a result falling within $k$ standard deviations of the mean:
+\begin{itemize}
+    \item $1\sigma \implies 68.27\%$
+    \item $2\sigma \implies 95.45\%$
+    \item $3\sigma \implies 99.73\%$
+\end{itemize}
+
+\section{Lecture 9: Estimators and Least Squares}
+
+\subsection{Properties of Estimators}
+An estimator $\hat{a}$ for a parameter $a$ should be:
+\begin{itemize}
+    \item \textbf{Consistent}: $\lim_{n \to \infty} \hat{a} = a$
+    \item \textbf{Unbiased}: $E[\hat{a}] = a$
+    \item \textbf{Efficient}: Smallest variance among all unbiased estimators.
+\end{itemize}
+
+\subsection{Least Squares Estimation ($\chi^2$)}
+The best estimate for parameters $\vec{\theta}$ in a model $f(x, \vec{\theta})$ is found by minimizing the chi-squared statistic.
+\[ \chi^2(\vec{\theta}) = \sum_{i=1}^{n} \frac{(y_i - f(x_i, \vec{\theta}))^2}{\sigma_i^2} \]
+The minimum is found by solving the system of equations $\pdv{\chi^2}{\theta_j} = 0$ for each parameter $\theta_j$.
+
+\subsection{Linear Least Squares}
+For a model linear in its parameters, $\vec{f} = A \vec{\theta}$:
+\begin{itemize}
+    \item \textbf{Parameter estimates}:
+          \[ \hat{\vec{\theta}} = (A^T V^{-1} A)^{-1} A^T V^{-1} \vec{y} \]
+    \item \textbf{Covariance of parameters}:
+          \[ V(\hat{\vec{\theta}}) = (A^T V^{-1} A)^{-1} \]
+\end{itemize}
+
+\subsection{Goodness of Fit}
+The reduced chi-squared, where `dof` is the degrees of freedom ($n$ data points - $m$ parameters), indicates the quality of the fit.
+\[ \frac{\chi^2_{\text{min}}}{\text{dof}} \approx 1 \implies \text{Good Fit} \]
+
+\section{Lecture 10: Advanced $\chi^2$ and Parameter Errors}
+
+\subsection{General Chi-Squared for Correlated Data}
+For correlated measurements with a covariance matrix $V$:
+\[ \chi^2 = (\vec{y} - \vec{\mu})^T V^{-1} (\vec{y} - \vec{\mu}) = \sum_{i,j} (y_i - \mu_i) V^{-1}_{ij} (y_j - \mu_j) \]
+
+\subsection{Parameter Errors from $\chi^2$ Curvature}
+The inverse covariance matrix of the parameter estimates $\hat{\vec{\theta}}$ is determined by the Hessian (second derivative) matrix of the $\chi^2$ function at its minimum.
+
+\subsubsection{General (Non-Linear) Case}
+\[ (V(\hat{\vec{\theta}}))^{-1}_{jk} = \frac{1}{2} \frac{\partial^2 \chi^2}{\partial \theta_j \partial \theta_k} \Bigg|_{\vec{\theta} = \hat{\vec{\theta}}} \]
+The diagonal elements of $V(\hat{\vec{\theta}})$ give the variances, $\sigma^2_{\theta_j}$, for each parameter.
+
+\end{document}

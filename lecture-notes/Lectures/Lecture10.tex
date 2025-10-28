@@ -1,0 +1,116 @@
+\section{Lecture 10}
+
+Tuesday, October 14th 2025
+
+In this lecture, I start to not take all notes, instead I write down only the key points.
+
+\subsection{Chi-Squared for Uncorrelated and Correlated Measurements}
+
+\begin{itemize}
+    \item Recall difference in chi-squared formula for uncorrelated and correlated measurements.
+    \item Uncorrelated:
+          \[
+              \chi^2 = \sum_{i=1}^{n} \frac{(y_i - \mu_i)^2}{\sigma_i^2}
+          \]
+    \item Correlated (general case):
+          \[
+              \chi^2 = \sum_{i, j}^{n} (y_i - \mu_i) V^{-1}_{ij} (y_j - \mu_j)
+          \]
+          where $V^{-1}$ is the inverse of the covariance matrix $V$.
+\end{itemize}
+
+\subsection{Covariance Matrix and Linear Transformations}
+
+\begin{itemize}
+    \item The covariance matrix is defined as
+          \[
+              V_{ij} = \mathrm{Cov}(y_i, y_j) = \langle (y_i - \mu_i)(y_j - \mu_j) \rangle .
+          \]
+    \item Suppose we apply a linear transformation $B$ to $\vec{y}$, where $B$ is an $n \times n$ matrix of eigenvectors that diagonalizes $V$.
+    \item Define transformed variables:
+          \[
+              \vec{z} = B \vec{y}, \quad V_z = B V B^T, \quad \mu_z = B \mu_y .
+          \]
+    \item Then:
+          \[
+              \boxed{\chi^2(z) = \left( \vec{z} - \vec{\mu_z} \right)^T V_z^{-1} \left( \vec{z} - \vec{\mu_z} \right)}
+          \]
+\end{itemize}
+
+\subsection{Modeling Data with Parameters}
+
+\begin{itemize}
+    \item Suppose we have a model
+          \[
+              y_i = f(x_i, \vec{\theta}),
+          \]
+          where $x_i$ are independent variables and $\vec{\theta}$ are model parameters.
+    \item Example: $y_i = m x_i + b$, with $\sigma_i \neq \sigma_j$ (heteroscedastic errors).
+    \item We want to find the best estimate of $\vec{\theta}$.
+\end{itemize}
+
+\subsection{Least Squares Estimation}
+
+\begin{itemize}
+    \item Define:
+          \[
+              \chi^2(\vec{\theta}) = \sum_{i=1}^{n} \frac{(y_i - f(x_i, \vec{\theta}))^2}{\sigma_i^2} .
+          \]
+    \item The best estimators for $\mu_i$ are $f(x_i|\vec{\theta})$ and
+          \[
+              \chi^2(\hat{\theta}) = \chi^2_{\text{min}} = \sum_i \left( \frac{y_i - f(x_i|\hat{\theta})}{\sigma_i} \right)^2 .
+          \]
+    \item Principle of least squares:
+          \[
+              \hat{\theta} = \text{arg min } \chi^2(\vec{\theta})
+          \]
+          i.e. the value of $\vec{\theta}$ that minimizes $\chi^2(\vec{\theta})$.
+    \item Solution satisfies:
+          \[
+              \pdv{\chi^2}{\theta_j} = 0 .
+          \]
+\end{itemize}
+
+\subsection{Distribution of Parameter Estimates}
+
+\begin{itemize}
+    \item Note: $\hat{\theta}$ is itself a random variable, with its own probability distribution.
+    \item A different sample $\{x_i, y_i\}$ will lead to a different $\hat{\theta}$.
+\end{itemize}
+
+\subsection{Quadratic Expansion of chi-squared and Error Estimates}
+
+\begin{itemize}
+    \item For polynomial (linear in parameters) fits:
+          \[
+              f(x_i|\vec{\theta}) = (A \vec{\theta})_i .
+          \]
+    \item Then:
+          \[
+              \chi^2 = (\vec{y} - A \vec{\theta})^T V^{-1} (\vec{y} - A \vec{\theta})
+          \]
+          \[
+              \chi^2 = (y_i - A_{im} \theta_m) V_{ij}^{-1} (y_j - A_{jn} \theta_n) .
+          \]
+    \item First derivative:
+          \[
+              \pdv{\chi^2}{\theta_k} = -2 (y_i - A_{im} \theta_m) V_{ij}^{-1} A_{jk} .
+          \]
+    \item Second derivative:
+          \[
+              \pdv{\chi^2}{\theta_k}{\theta_l} = 2 A_{il} V_{ij}^{-1} A_{jk} = 2 (A^T V^{-1} A)_{kl} .
+          \]
+\end{itemize}
+
+\subsection{Covariance of Parameter Estimates}
+
+\begin{itemize}
+    \item For linear fits:
+          \[
+              V(\hat{\theta}) = (A^T V^{-1} A)^{-1} .
+          \]
+    \item For non-linear fits:
+          \[
+              V^{-1}(\hat{\theta}) = \frac{1}{2} \pdv[2]{\chi^2}{\theta_j}{\theta_k} \Big|_{\theta = \hat{\theta}} .
+          \]
+\end{itemize}

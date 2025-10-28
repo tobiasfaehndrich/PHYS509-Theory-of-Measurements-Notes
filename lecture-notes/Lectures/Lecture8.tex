@@ -1,0 +1,154 @@
+\section{Lecture 8}
+Tuesday, October 7th, 2025
+
+\subsection{The Gaussian (Normal) Distribution}
+\[
+    G(x|\mu, \sigma) = \frac{1}{\sqrt{2 \pi} \sigma}
+    e^{-\frac{(x - \mu)^2}{2 \sigma^2}}
+\]
+
+\subsection{The Standard Normal Distribution}
+\[
+    N(0,1) = \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}}
+\]
+
+\subsection{Example: Circular Symmetry (Darts on a Board)}
+Distribution of darts:
+\[
+    f(x,y) = h(x) k(y)
+\]
+Transform to polar coordinates:
+\[
+    g(r,\theta) \approx f(x,y) = h(x)k(y), \qquad g(r,\theta) = g(r)
+\]
+\[
+    \pdv{g}{\theta} = 0
+    = \pdv{f}{x}\pdv{x}{\theta} + \pdv{f}{y}\pdv{y}{\theta}
+\]
+Coordinates:
+\[
+    x = r \cos\theta, \qquad y = r \sin\theta
+\]
+\[
+    \pdv{x}{\theta} = -r \sin\theta = -y, \qquad
+    \pdv{y}{\theta} = r \cos\theta = x
+\]
+Condition:
+\[
+    0 = h'(x) k(y)(-y) + h(x) k'(y) x
+\]
+\[
+    \frac{h'(x)}{x h(x)} = \frac{k'(y)}{y k(y)} = a \quad (\text{constant})
+\]
+Solutions:
+\[
+    h(x) = c e^{a x^2}, \qquad k(y) = d e^{a y^2}
+\]
+\[
+    f(x,y) = A e^{a(x^2+y^2)} = A e^{a r^2} \approx A e^{-r^2}
+\]
+
+\subsection{Expectation Value of a Gaussian}
+\[
+    E(x) = \mu = \frac{1}{\sqrt{2 \pi}\sigma}
+    \int_{-\infty}^{\infty} x e^{-\frac{(x - \mu)^2}{2\sigma^2}} dx = \mu
+\]
+
+Useful identity:
+\[
+    \int_{-\infty}^{\infty} e^{-a x^2} dx = \sqrt{\frac{\pi}{a}}
+\]
+
+\subsection{Moments of the Gaussian}
+The $n$th central moment:
+\[
+    \frac{1}{\sqrt{2 \pi}\sigma} \int_{-\infty}^{\infty} (x-\mu)^n
+    e^{-\frac{(x-\mu)^2}{2\sigma^2}} dx
+\]
+
+- All odd moments vanish (symmetry about $\mu$).
+
+Define
+\[
+    I_0(a) = \int_{-\infty}^{\infty} e^{-a y^2} dy = \sqrt{\frac{\pi}{a}}
+\]
+
+Differentiation rule:
+\[
+    \dv[^n]{I_0(a)}{a} = (-1)^n \frac{(2n)!}{n!} \frac{I_0(a)}{(2a)^n}
+\]
+
+\subsection{Variance of the Gaussian}
+Let $y = x-\mu$. Then
+\[
+    V(y) = V(x) = \frac{1}{\sqrt{2 \pi}\sigma}
+    \int_{-\infty}^{\infty} y^2 e^{-\frac{y^2}{2\sigma^2}} dy
+\]
+\[
+    = -\dv{I_0(a)}{a}\Bigg|_{a=\frac{1}{2\sigma^2}} = \sigma^2
+\]
+
+\subsection{Kurtosis of the Gaussian}
+Fourth central moment:
+\[
+    \int y^4 e^{-a y^2} dy = \frac{d^2 I_0(a)}{d a^2}\frac{1}{4 a^2}
+\]
+Evaluates to:
+\[
+    E\!\left[\left(\frac{x-\mu}{\sigma}\right)^4\right] = 3
+\]
+Thus the Gaussian kurtosis = 3.
+- Excess kurtosis = 0.
+- Distributions with $>3$ have “fat tails.”
+
+\subsection{Poisson Distribution and Gaussian Limit}
+\[
+    P(r|\lambda) = \frac{1}{r!} \lambda^r e^{-\lambda}
+\]
+For large $r$, Stirling approximation:
+\[
+    r! \approx \sqrt{2 \pi r} \left(\frac{r}{e}\right)^r
+\]
+\[
+    \log P(r|\lambda) = -\log(r!) + r\log\lambda - \lambda
+\]
+
+Expanding around $r \approx \lambda$ leads to Gaussian limit with variance $\lambda$:
+\[
+    P(r|\lambda) \approx
+    \frac{1}{\sqrt{2 \pi \lambda}} e^{-\frac{(r-\lambda)^2}{2\lambda}}
+\]
+
+\subsection{Central Limit Theorem (CLT)}
+Let $x_1,\dots,x_n$ be independent random variables with
+mean $\mu$, variance $\sigma^2$. Define sample mean
+\[
+    \bar{x} = \frac{1}{n} \sum_{i=1}^n x_i
+\]
+Then as $n \to \infty$:
+\[
+    \bar{x} \sim \mathcal{N}\!\left(\mu,\; \frac{\sigma^2}{n}\right)
+\]
+
+\subsection{Cumulative Distribution Function of a Gaussian}
+\[
+    F(x) = \int_{-\infty}^x G(y|\mu,\sigma) dy
+\]
+
+Define error function:
+\[
+    \text{erf}(t) = \frac{2}{\sqrt{\pi}} \int_0^t e^{-y^2} dy,
+    \qquad
+    \text{erfc}(t) = 1 - \text{erf}(t) = \frac{2}{\sqrt{\pi}} \int_t^\infty e^{-y^2} dy
+\]
+
+\subsection{Gaussian Confidence Intervals}
+\begin{itemize}
+    \item $1\sigma$: $68.27\%$
+    \item $2\sigma$: $95.45\%$
+    \item $3\sigma$: $99.73\%$
+    \item $5\sigma$: $99.99994\%$
+\end{itemize}
+
+\subsection{Estimators}
+Given a sample of size $n$, an \emph{estimator} is any function designed to estimate a property of the true pdf from which the samples were drawn.

@@ -1,0 +1,18 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[1] Config.pm:310> INFO - Logfile is 'HW1.blg'
+[347] biber-MSWIN64:340> INFO - === 
+[449] Biber.pm:419> INFO - Reading 'HW1.bcf'
+[756] Biber.pm:979> INFO - Found 4 citekeys in bib section 0
+[795] Biber.pm:4419> INFO - Processing section 0
+[827] Biber.pm:4610> INFO - Looking for bibtex file 'references.bib' for section 0
+[953] bibtex.pm:1713> INFO - LaTeX decoding ...
+[975] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
+[1136] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1137] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1137] Biber.pm:4239> INFO - Sorting list 'anyt/global//global/global' of type 'entry' with template 'anyt' and locale 'en-US'
+[1137] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[1155] bbl.pm:660> INFO - Writing 'HW1.bbl' with encoding 'UTF-8'
+[1161] bbl.pm:763> INFO - Output to HW1.bbl
+[1162] Biber.pm:131> WARN - BibTeX subsystem: C:\Users\tobia\AppData\Local\Temp\biber_tmp_Ep5T\33e59b5ca9ec342068223d604c3f8d55_10688.utf8, line 21, warning: 49 characters of junk seen at toplevel
+[1162] Biber.pm:131> WARN - BibTeX subsystem: C:\Users\tobia\AppData\Local\Temp\biber_tmp_Ep5T\33e59b5ca9ec342068223d604c3f8d55_10688.utf8, line 32, warning: 50 characters of junk seen at toplevel
+[1162] Biber.pm:133> INFO - WARNINGS: 2

@@ -1,0 +1,12 @@
+\contentsline {section}{Week 1 – Probability Basics}{2}{}%
+\contentsline {section}{Week 2 – Common Distributions}{2}{}%
+\contentsline {section}{Week 3 – Transformations and Error Propagation}{3}{}%
+\contentsline {section}{Week 4 – Joint and Conditional Distributions}{3}{}%
+\contentsline {section}{Week 5 – Bayesian Inference}{3}{}%
+\contentsline {section}{Week 6 – Parameter Estimation and Likelihood}{4}{}%
+\contentsline {section}{Week 7 – Confidence Intervals and Hypothesis Testing}{4}{}%
+\contentsline {section}{Week 8 – Chi-Squared and Goodness of Fit}{5}{}%
+\contentsline {section}{Week 9 – Linear Regression}{5}{}%
+\contentsline {section}{Week 10 – Covariance Matrices and Transformations}{5}{}%
+\contentsline {section}{Week 11 – Multivariate Gaussian and Measurement Ellipses}{5}{}%
+\contentsline {section}{Week 12 – Advanced Topics and Review}{6}{}%

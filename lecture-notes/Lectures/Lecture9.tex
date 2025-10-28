@@ -1,0 +1,127 @@
+\section{Lecture 9}
+
+Thursday, October 9th 2025
+
+\subsection{Properties of Estimators}
+\begin{itemize}
+    \item Consistent: $\lim_{n \rightarrow \infty} \hat{a} = a$
+    \item Unbiased: $\mathbb{E}[\hat{a(x)}] = a$
+    \item Efficient: smallest variance of all unbiased estimators
+\end{itemize}
+
+\subsection{Example: Measurements and Models}
+\begin{itemize}
+    \item Let $x_1, x_2, \ldots, x_n$ be $n$ measurement points.
+    \item Example applications: number of elements in a histogram bin, position of hits in a detector.
+    \item $y_i$ are the measured values at each $x_i$, with variances $V(y_i) = \sigma_i^2$.
+    \item Suppose we suspect a model for the histogram shape (e.g.\ linear background $+$ Gaussian signal):
+          \[
+              \text{Number of entries} = m x_i + b + A e^{-\frac{(x_i - \mu)^2}{2\sigma^2}}
+          \]
+    \item More generally, assume a function $f(x, \vec{\theta})$ with parameters $\vec{\theta}$.
+\end{itemize}
+
+\subsection{Least Squares Estimation}
+\begin{itemize}
+    \item The best estimate for $\vec{\theta}$ is the value that minimizes the chi-squared:
+          \[
+              \chi^2 = \sum_{i=1}^{n} \frac{(y_i - f(x_i, \vec{\theta}))^2}{\sigma_i^2}.
+          \]
+    \item Condition for minimization:
+          \[
+              \pdv{\chi^2}{\theta_j} = 0.
+          \]
+    \item Equivalent system of equations:
+          \[
+              \sum_{i=1}^{n} \frac{(y_i - f(x_i, \vec{\theta}))}{\sigma_i^2}
+              \pdv{f(x_i, \vec{\theta})}{\theta_j} = 0.
+          \]
+\end{itemize}
+
+\subsection{Straight Line Fit}
+\begin{itemize}
+    \item For $f(x_i, \vec{\theta}) = m x_i + b$, with $\vec{\theta} = (m, b)$:
+          \[
+              \chi^2 = \sum_{i=1}^{n} \frac{(y_i - (m x_i + b))^2}{\sigma_i^2}.
+          \]
+    \item Normal equations from minimization:
+          \[
+              \pdv{\chi^2}{m} = -2 \sum_{i=1}^{n} \frac{(y_i - (m x_i + b))}{\sigma_i^2} x_i = 0,
+          \]
+          \[
+              \pdv{\chi^2}{b} = -2 \sum_{i=1}^{n} \frac{(y_i - (m x_i + b))}{\sigma_i^2} = 0.
+          \]
+    \item Two equations, two unknowns. Can be written in matrix form:
+          \[
+              \begin{bmatrix}
+                  S_{xx} & S_x \\
+                  S_x    & S_1
+              \end{bmatrix}
+              \begin{bmatrix}
+                  m \\
+                  b
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  S_{xy} \\
+                  S_y
+              \end{bmatrix},
+          \]
+          where
+          \[
+              S_{xx} = \sum_i \frac{x_i^2}{\sigma_i^2}, \quad
+              S_x = \sum_i \frac{x_i}{\sigma_i^2}, \quad
+              S_1 = \sum_i \frac{1}{\sigma_i^2},
+          \]
+          \[
+              S_{xy} = \sum_i \frac{x_i y_i}{\sigma_i^2}, \quad
+              S_y = \sum_i \frac{y_i}{\sigma_i^2}.
+          \]
+\end{itemize}
+
+\subsection{Generalized Least Squares with Covariance Matrix}
+\begin{itemize}
+    \item In general, for non-diagonal covariance matrix $V$ of $y_i$:
+          \[
+              \chi^2 = \sum_{i=1}^{n} \sum_{j=1}^{n}
+              (y_i - f(x_i, \vec{\theta})) \, E_{ij} \, (y_j - f(x_j, \vec{\theta})),
+          \]
+          where $E = V^{-1}$ is the inverse covariance matrix.
+    \item Linear case: if $f(x_i, \vec{\theta})$ is linear in $\theta$:
+          \[
+              \vec{f} = A \vec{\theta}.
+          \]
+    \item Then
+          \[
+              \chi^2 = (\vec{y} - A \vec{\theta})^T V^{-1} (\vec{y} - A \vec{\theta}).
+          \]
+    \item Minimization gives:
+          \[
+              (A^T V^{-1} A) \vec{\theta} = A^T V^{-1} \vec{y},
+          \]
+          \[
+              \Rightarrow \vec{\theta} = (A^T V^{-1} A)^{-1} A^T V^{-1} \vec{y}.
+          \]
+\end{itemize}
+
+\subsection{Covariance of the Estimated Parameters}
+\begin{itemize}
+    \item Propagation of covariance:
+          \[
+              V(\vec{y}) = B V(\vec{x}) B^T.
+          \]
+    \item For parameter estimates:
+          \[
+              V(\vec{\theta}) = (A^T V^{-1} A)^{-1}.
+          \]
+\end{itemize}
+
+\subsection{Goodness of Fit}
+\begin{itemize}
+    \item The chi-squared statistic
+          \[
+              \chi^2 = \sum_{i=1}^{n} \frac{(y_i - f(x_i, \vec{\theta}))^2}{\sigma_i^2}
+          \]
+          is distributed as $\chi^2$ with $n$ degrees of freedom if the $y_i$ are Gaussian.
+    \item If the model is good, $\chi^2/\text{dof} \sim 1$; if the model is bad, $\chi^2/\text{dof} \gg 1$.
+\end{itemize}

@@ -1,0 +1,9 @@
+[1] Config.pm:307> INFO - This is Biber 2.19
+[2] Config.pm:310> INFO - Logfile is 'HW3.blg'
+[1102] biber-MSWIN64:340> INFO - === 
+[1450] Biber.pm:419> INFO - Reading 'HW3.bcf'
+[2022] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[2102] bbl.pm:660> INFO - Writing 'HW3.bbl' with encoding 'UTF-8'
+[2103] bbl.pm:763> INFO - Output to HW3.bbl
+[2104] Biber.pm:131> WARN - The file 'HW3.bcf' does not contain any citations!
+[2105] Biber.pm:133> INFO - WARNINGS: 1

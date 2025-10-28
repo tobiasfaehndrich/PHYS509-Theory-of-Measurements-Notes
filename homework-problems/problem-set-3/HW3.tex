@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+\usepackage{commands}
+
+% Document metadata
+\title{PHYS 509 - Problem Set 3}
+\author{Tobias Faehndrich}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% ============================================================
+% PROBLEM 1
+% ============================================================
+\section{Problem 1: Least Squares Fit of Exponential Decay (1000 Events)}
+
+\begin{quote}
+    File \texttt{exp1000.txt} contains a simulated list of decay times from an experiment.
+
+    \textbf{(a)} Perform a least squares fit to this distribution for the lifetime $\tau$, to find the best estimate and also its uncertainty. Plot your fit results on your histogram of the data.
+
+    \textbf{(b)} Plot a scan of the $\chi^2$ about the minimum over a range that shows at least the $\pm 3\sigma$ region with lines indicating the 1, 2 and 3$\sigma$ levels on the $\chi^2$ plot. Make a table with the symmetric and asymmetric confidence intervals for 1, 2 and 3$\sigma$ limits.
+\end{quote}
+
+\divider
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item For least squares fitting of histogram data, use $\chi^2 = \sum_i \frac{(n_i - \mu_i)^2}{\sigma_i^2}$ where $n_i$ is the observed count in bin $i$, and $\mu_i$ is the expected count.
+    \item For Poisson statistics (counting), $\sigma_i^2 = n_i$ (variance equals mean).
+    \item The exponential decay PDF is $p(t|\tau) = \frac{1}{\tau}e^{-t/\tau}$ for $t \geq 0$.
+    \item Expected count in bin $i$ with edges $[t_{i-1}, t_i]$: $\mu_i = N \int_{t_{i-1}}^{t_i} p(t|\tau) dt = N(e^{-t_{i-1}/\tau} - e^{-t_i/\tau})$.
+    \item Minimize $\chi^2$ to find best $\tau$. Uncertainty from $\Delta\chi^2 = 1$ (1 parameter).
+    \item For confidence intervals: $\Delta\chi^2 = 1, 4, 9$ for 1, 2, 3$\sigma$ levels.
+\end{itemize}
+
+
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 2
+% ============================================================
+\section{Problem 2: Maximum Likelihood Fit of Exponential Decay (1000 Events)}
+
+\begin{quote}
+    Use the same file as above, but perform a maximum likelihood fit for $\tau$.
+
+    \textbf{(a)} Perform a likelihood fit to this distribution for the lifetime $\tau$, to find the best estimate and also its uncertainty. Plot your fit result on a histogram of the data.
+
+    \textbf{(b)} Plot a scan of the likelihood $L$ about the minimum over a range that shows at least the $\pm 3\sigma$ region with lines indicating the 1, 2 and 3$\sigma$ levels on the plot. Make a table with the symmetric and asymmetric confidence intervals for 1, 2 and 3$\sigma$ limits.
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item For unbinned maximum likelihood, the likelihood function is $L(\tau) = \prod_{i=1}^{N} p(t_i|\tau)$ where $t_i$ are the individual measurements.
+    \item It's easier to work with log-likelihood: $\ln L = \sum_{i=1}^{N} \ln p(t_i|\tau) = -N\ln\tau - \frac{1}{\tau}\sum_{i=1}^{N} t_i$.
+    \item Maximize $\ln L$ (or minimize $-\ln L$) to find best $\tau$.
+    \item The ML estimator for exponential lifetime: $\hat{\tau} = \bar{t} = \frac{1}{N}\sum_{i=1}^{N} t_i$ (sample mean).
+    \item Uncertainty from $\Delta(-\ln L) = 0.5$ for 1 parameter (equivalent to $\Delta\chi^2 = 1$).
+    \item For confidence intervals: $\Delta(-\ln L) = 0.5, 2, 4.5$ for 1, 2, 3$\sigma$ levels.
+\end{itemize}
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 3
+% ============================================================
+\section{Problem 3: Fits with Small Sample (30 Events)}
+
+\begin{quote}
+    Do the same fits as above, but with the file \texttt{exp30.txt}, which only has 30 entries.
+
+    \textbf{(a)} Do the least squares fit on this file, with the same plots as above. Explain your histogram binning, how you determined it, and any other special treatment you had to make.
+
+    \textbf{(b)} Do the ML fit, again with the same plots as above.
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item With only 30 events, histogram binning becomes critical. Too many bins $\rightarrow$ empty bins, too few $\rightarrow$ loss of information.
+    \item Rule of thumb: $N_{\text{bins}} \approx \sqrt{N} \approx 5-6$ bins for $N=30$.
+    \item For Poisson statistics with small counts, use $\sigma_i^2 = n_i$ but be careful with empty bins ($n_i = 0$).
+    \item Some options for handling empty bins: exclude from $\chi^2$, use $\sigma_i^2 = 1$, or use expected count $\mu_i$.
+    \item ML fit doesn't require binning - works directly with unbinned data. Should be more reliable for small samples.
+    \item Compare results: Which method gives tighter uncertainties? Which is more stable?
+\end{itemize}
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 4
+% ============================================================
+\section{Problem 4: Convolution of Exponential with Gaussian}
+
+\begin{quote}
+    Derive an expression for the \textbf{convolution} of an exponential decay with lifetime $\tau$, with a Gaussian resolution function. Assume the Gaussian is centered at 0, with variance $\sigma^2$. You should be able to express this function using an exponential and an erfc function.
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item Convolution of two PDFs $f(t)$ and $g(t)$: $(f * g)(t) = \int_{-\infty}^{\infty} f(t') g(t - t') dt'$.
+    \item Exponential: $f(t) = \frac{1}{\tau}e^{-t/\tau}$ for $t \geq 0$, zero otherwise.
+    \item Gaussian: $g(t) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-t^2/(2\sigma^2)}$.
+    \item The convolution integral: $h(t) = \int_{0}^{\infty} \frac{1}{\tau}e^{-t'/\tau} \cdot \frac{1}{\sqrt{2\pi\sigma^2}}e^{-(t-t')^2/(2\sigma^2)} dt'$.
+    \item Trick: Complete the square in the exponent to get a Gaussian integral.
+    \item Result involves $\text{erfc}(x) = \frac{2}{\sqrt{\pi}}\int_x^{\infty} e^{-u^2} du$ (complementary error function).
+    \item Expected form: $h(t) = \frac{A}{\tau} e^{a + bt} \cdot \text{erfc}(c + dt)$ where you need to find $A, a, b, c, d$.
+\end{itemize}
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 5
+% ============================================================
+\section{Problem 5: ML Fit with Gaussian Smearing}
+
+\begin{quote}
+    Download the file \texttt{exp\_smeared.txt}, which contains a set of simulated data from an experiment measuring the lifetime of a particle, but with Gaussian smearing due to detector resolution. Perform a ML fit to the data to extract the lifetime $\tau$ and detector resolution $\sigma$, along with the full covariance matrix of these estimators. Use the Kolmogorov-Smirnov test to determine the goodness of fit for this model.
+
+    Plot your fit result on top of a histogram of your data.
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item The PDF is now the convolution result from Problem 4: $h(t|\tau, \sigma)$.
+    \item Two parameters to fit: $\tau$ and $\sigma$. Use unbinned ML.
+    \item Log-likelihood: $\ln L(\tau, \sigma) = \sum_{i=1}^{N} \ln h(t_i|\tau, \sigma)$.
+    \item Covariance matrix from inverse Hessian: $V = H^{-1}$ where $H_{jk} = -\frac{\partial^2 \ln L}{\partial\theta_j \partial\theta_k}$.
+    \item Diagonal elements $V_{jj} = \sigma_j^2$ (variances), off-diagonal $V_{jk}$ are covariances.
+    \item Correlation: $\rho_{jk} = V_{jk}/(\sigma_j \sigma_k)$.
+    \item Kolmogorov-Smirnov test: Compare empirical CDF with fitted CDF. $D = \max|F_{\text{data}}(t) - F_{\text{fit}}(t)|$.
+    \item KS p-value tells you goodness of fit. $p > 0.05$ usually means acceptable fit.
+\end{itemize}
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 6
+% ============================================================
+\section{Problem 6: ML Fit with Signal and Background}
+
+\begin{quote}
+    Download the file \texttt{exp\_smear\_bckgnd.txt}, which contains data from a signal which is a smeared exponential similar to the one above, but also with a background of random events with uniform probability over the experiment's region of operation, which is from $t = -3$ to $t = 10$ seconds.
+
+    The detector's time resolution is determined elsewhere to be a Gaussian $\mathcal{N}(0, \sigma^2)$ with $\sigma = 0.2$ s.
+
+    Perform a ML fit to the data to extract the lifetime $\tau$, fraction of the sample that is signal, along with the full covariance matrix of these estimators.
+
+    Plot your fit result on a histogram of the data, and also on the same plot show the fitted background and (smeared) signal fits.
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item Combined PDF: $p(t|\tau, f) = f \cdot h(t|\tau, \sigma) + (1-f) \cdot p_{\text{bkg}}(t)$ where $f$ is signal fraction.
+    \item Background PDF: $p_{\text{bkg}}(t) = \frac{1}{13}$ for $t \in [-3, 10]$, zero otherwise (uniform).
+    \item Signal PDF: $h(t|\tau, \sigma)$ from Problem 4, with $\sigma = 0.2$ s (fixed).
+    \item Two parameters: $\tau$ and $f$. Use unbinned ML.
+    \item For plotting: $N_{\text{sig}} = f \cdot N_{\text{total}}$, $N_{\text{bkg}} = (1-f) \cdot N_{\text{total}}$.
+    \item Signal component: $f \cdot h(t|\tau, \sigma) \cdot N_{\text{total}} \cdot \Delta t$ (for histogram).
+    \item Background component: $(1-f) \cdot p_{\text{bkg}}(t) \cdot N_{\text{total}} \cdot \Delta t$.
+    \item Total fit: sum of signal and background components.
+\end{itemize}
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 7
+% ============================================================
+\section{Problem 7: Gaussian Signal with Flat Background}
+
+\begin{quote}
+    File \texttt{gauss\_bckgnd.txt} contains the counts from an experiment with a Gaussian signal of unknown mean and sigma, along with a flat background. There are 50 bins, with edges listed in the file.
+
+    \textbf{(a)} Do a least squares fit on the data for the amplitude, mean, and sigma of the signal ($S, \mu_0, \sigma_0$), and the background level $\mu_B$. The \textbf{significance} of your signal is defined as $S/\sigma_S$, where $\sigma_S^2$ is the variance of $S$ returned by your fit.
+
+    \textbf{(b)} Plot the histogram of the data along with the total fit result, the signal component and the background.
+
+    \textbf{(c)} Choose the bins that you consider contain the bulk of the signal based upon the fit. How many background events $B$ do you estimate are in this region, and what would you estimate is the statistical uncertainty $\sigma_B$ on this number. Explain your reasoning.
+
+    \textbf{(d)} Given the number of signal events $S$ you obtained from your fit, what would the uncertainty $\sigma_S$ on this be if the data were background free? Compare this to what you actually obtained in the fit.
+
+    \textbf{(e)} Considering all the bins you chose in your signal region, what is your estimate of the uncertainty on the size of statistical fluctuations in this region, expressed in terms of $S$ and $B$? What is your expected signal significance, then, and how does it compare with your fitted value?
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item Model for bin counts: $\mu_i = S \cdot g_i(\mu_0, \sigma_0) + \mu_B$ where $g_i = \int_{x_{i-1}}^{x_i} \mathcal{N}(\mu_0, \sigma_0^2) dx$.
+    \item Four parameters: $S$ (total signal events), $\mu_0$ (signal mean), $\sigma_0$ (signal width), $\mu_B$ (background per bin).
+    \item $\chi^2 = \sum_i \frac{(n_i - \mu_i)^2}{n_i}$ where $n_i$ is observed count in bin $i$.
+    \item Signal significance from fit: $S/\sigma_S$ where $\sigma_S$ comes from covariance matrix.
+    \item For signal region (e.g., $[\mu_0 - 3\sigma_0, \mu_0 + 3\sigma_0]$): count bins in this range.
+    \item Background in region: $B = \mu_B \cdot N_{\text{bins}}$, uncertainty $\sigma_B = \sqrt{\mu_B \cdot N_{\text{bins}}}$ (Poisson).
+    \item If background-free: $\sigma_S = \sqrt{S}$ (Poisson).
+    \item With background: total counts in region $N = S + B$, so $\sigma_N = \sqrt{N} = \sqrt{S + B}$.
+    \item Signal significance: $\frac{S}{\sqrt{S + B}}$ (approximation when background is known).
+\end{itemize}
+
+\subsection{Solution}
+
+
+% ============================================================
+% PROBLEM 8
+% ============================================================
+\section{Problem 8: Measuring Gravitational Acceleration}
+
+\begin{quote}
+    In an undergraduate lab, students perform an experiment to measure $g$, by dropping a long clear plastic plate with a dark line marked every 10 cm over a 1 m length. The lines are sensed by a photosensor, and the time $t$ that each passes the sensor is recorded. The clock of the timer starts when the first line is sensed, so there are 11 measurements, starting with $t = 0$ for the line at 0 cm. The plate is held by hand some point above the photosensor before releasing.
+
+    The file \texttt{gmeasure.txt} contains the times for the 11 markings, each with an uncertainty of 5 ms.
+
+    \textbf{(a)} What is the equation for the position of the plate $z(t)$, where $z =$ vertical position of the 0 cm line marking wrt the photosensor position? (For uniformity, let's take $z$ increasing the downward direction.)
+
+    \textbf{(b)} Since your experimentally measured variable is $t$, invert this so $t$ is the dependent variable and then fit for $g$. Plot the data, with errorbars, along with your fit result.
+
+    \textbf{(c)} Instead, treat $z$ as the dependent variable, and fit for $g$ using the original equation you had. You will need to convert the uncertainty on $t$ to an approximate uncertainty on $z$ at each point that will change as your fit parameters change. Plot the data, with errorbars, along with your fit result. Compare with the previous results.
+\end{quote}
+
+\textbf{Tutor's Hint:}
+\begin{itemize}
+    \item Free fall from rest at initial position $z_0$ above sensor: $z(t) = z_0 + \frac{1}{2}gt^2$.
+    \item At $t=0$, the 0 cm line is at the sensor, so $z(0) = 0 \Rightarrow z_0 = 0$.
+    \item Actually, the plate was held above and released. When does the 0 cm line reach the sensor?
+    \item More carefully: If released at height $h$ above sensor at $t_{\text{release}}$, then at sensor crossing: $0 = -h + \frac{1}{2}g(t_0)^2$.
+    \item Redefine clock: $t = 0$ when 0 cm line passes sensor. Then for subsequent lines: $z_i = \frac{1}{2}gt_i^2 + v_0 t_i$ where $v_0$ is velocity at $t=0$.
+    \item Simplification: If we take $z$ as position of each line wrt 0 cm line, then $z_i = i \cdot 10$ cm for line $i = 0, 1, 2, \ldots, 10$.
+    \item For part (b): $t = \sqrt{\frac{2z}{g}}$ (if starting from rest). Fit $t$ vs $z$ data.
+    \item For part (c): $z = \frac{1}{2}gt^2$. Error propagation: $\sigma_z = \left|\frac{dz}{dt}\right| \sigma_t = gt \cdot \sigma_t$.
+    \item Note: uncertainty on $z$ depends on $g$ (the parameter you're fitting!). Iterate: fit, recalculate errors, refit.
+\end{itemize}
+
+\subsection{Solution}
+
+
+\end{document}

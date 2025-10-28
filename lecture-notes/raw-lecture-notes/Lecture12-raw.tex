@@ -1,0 +1,99 @@
+\section{Lecture 12}
+
+Tuesday, October 21st 2025
+
+\begin{itemize}
+    \item Usually we have data ($x_i, \, y_i \pm \sigma_i$). We want to fit a model $y = f(x; \, \theta)$ to the data.
+
+          \[ \chi^2 = \sum_i \frac{(y_i - f(x_i; \, \theta))^2}{\sigma_i^2} \]
+
+    \item sometimes we are given $y = f(x)$ and sometimes we are given $x = g(y)$.
+
+          \[ \chi^2 = \sum_i \frac{(x_i - g(y_i; \, \theta))^2}{\sigma_{x,i}^2} \]
+
+          \[ \sigma_x = \left| \frac{dg}{dy} \right| \sigma_y \]
+
+    \item Now that is the end of least squared fits for a while.
+    \item Now we move on to Unbinned data
+    \item Idea is that you have some data drawn from some probability distribution $P(x;a)$
+          \[ P(t) \sim \frac{1}{\tau} e^{-t/\tau} \]
+    \item Data sample of size $n$: $\{x_1, \, x_2, \, \ldots, \, x_n\}$
+    \item Form likelihood function:
+          \[ \mathcal{L}(x_1, \, x_2, \, \ldots, \, x_n; \, a) = \prod_{i=1}^n P(x_i; \, a) \]
+    \item This is equivalent to the probability of getting the data given the parameter $a$ $\Rightarrow P(\vec{x} | a)$
+    \item Not a probability distribution in $a$! It is a function of $a$.
+    \item Now suppose we have an estimator $\hat{a}$ for $a$. Then the expectation value of the estimator is:
+          \[ E[\hat{a}] = \int \hat{a}(\vec{x}) P(\vec{x}; \, a) d\vec{x} \]
+    \item The maximum likelihood principle states that the best estimate for $a$ is the value $\hat{a}$ that maximizes $\mathcal{L}(\vec{x}; \, a)$
+          \[ \pdv{\mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = \hat{a}} = 0 \]
+
+    \item Often easier to maximize $\ln \mathcal{L}$ since $\ln$ is monotonic (you don't need to worry about really small numbers and machine precision):
+          \[ \ln \mathcal{L}(\vec{x}; \, a) = \ln{ \prod_{i=1}^n P(x_i; \, a)} = \sum_{i=1}^n \ln P(x_i; \, a) \]
+
+    \item Then we will find:
+
+          \begin{enumerate}
+              \item max for $\ln \mathcal{L}(\vec{x}; \, a)$
+              \item min for $- \ln \mathcal{L}(\vec{x}; \, a)$
+          \end{enumerate}
+
+    \item ML tend to be not unbiased, but consisten, often efficient
+          \[ \pdv{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = \hat{a}} = 0 \]
+
+    \item Example: Exponential distribution
+          \[ P(t; \, \tau) = \frac{1}{\tau} e^{-t/\tau} \]
+          \[ \mathcal{L}(t_1, \, t_2, \, \ldots, \, t_n; \, \tau) = \prod_{i=1}^n \frac{1}{\tau} e^{-t_i/\tau} = \sum_{i=1}^n \ln\left( \frac{1}{\tau} e^{-t_i/\tau} \right) = - n \ln \tau - \frac{1}{\tau} \sum_{i=1}^n t_i \]
+          \[ \pdv{\ln \mathcal{L}}{\tau} = 0 = - \frac{n}{\tau} + \frac{1}{\tau^2} \sum_{i=1}^n t_i \]
+          \[ \hat{\tau} = \frac{1}{n} \sum_{i=1}^n t_i = =\frac{1}{n} \sum_{i=1}^n t_i = \bar{t} \]
+          This is unbiased.
+    \item \[ E(\hat{\tau}) = \frac{1}{n} E(\sum_{i=1}^n t_i) = \frac{1}{n} \sum_{i=1}^n E(t_i) = \frac{1}{n} n \tau = \tau \]
+    \item Example: Liftetime with cutoff T
+
+          (not normalized P:)
+          \[ P(t|\tau) = \begin{cases}
+                  \frac{1}{\tau} e^{-t/\tau} / e^{-T/\tau} & 0 \geq t \geq T  \\
+                  0                                        & \text{otherwise}
+              \end{cases} \]
+
+    \item Now must normalize! $\sum_{t=T}^{\infty} P(t|\tau) = 1$
+
+          \[ P(t|\tau) = \frac{1}{(1-e^{-T/\tau}) \tau} e^{-t/\tau} \]
+
+    \item Log-likelihood:
+
+          \[ \ln \mathcal{L} = \sum_{i=1}^n \left[ \ln\left( (1-e^{-T/\tau}) \tau \right) \right] - \frac{1}{\tau} \sum_{i=1}^n t_i \]
+
+          \[ = -n \ln (1-e^{-T/\tau}) - n \tau - \frac{1}{\tau} \sum_{i=1}^n t_i \]
+
+    \item Set derivative to zero:
+          \[ \pdv{\ln \mathcal{L}}{\tau} = 0 \]
+          \[ \pdv{\ln \mathcal{L}}{\tau} = \frac{-n (-e^{-T/\tau}) (\frac{T}{\tau^2})}{(1-e^{-T/\tau})} - \frac{n}{\tau} + \frac{1}{\tau^2} \sum_{i=1}^n t_i = 0 \]
+
+    \item Multiple measurements of some quantity
+          \[ P(x | \mu, \sigma) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-(x - \mu)^2 / 2 \sigma^2} \]
+          \[ \ln \mathcal{L} = - \sum_i \ln (\sqrt{2 \pi}) - \sum_i \ln \sigma - \frac{1}{2} \sum_i \frac{(x_i - \mu)^2}{\sigma^2} \]
+
+          \[ \pdv{\ln \mathcal{L}}{\mu} = 0 = \frac{-1}{2} (-2) \sum_i \frac{(x_i - \mu)}{\sigma^2} \]
+          \[ = \frac{1}{\sigma^2}  \sum_i (x_i - \hat{\mu}) = 0 \]
+          \[ \sum_i x_i = n \hat{\mu} \Rightarrow \hat{\mu} = \frac{1}{n} \sum_i x_i = \bar{x} \]
+    \item Now for $\sigma$:
+
+          \[ \pdv{\ln \mathcal{L}}{\sigma}\Big|_{\hat{\sigma}, \hat{\mu}} = 0 = -\frac{n}{\sigma}- \frac{1}{2} \left(\frac{-2}{\sigma^3} \right) \sum_i (x_i - \mu)^2\]
+
+          \[ -n \hat{\sigma^2} + \sum_i (x_i - \hat{\mu})^2 = 0 \]
+          \[ \hat{\sigma^2} = \frac{1}{n} \sum_i (x_i - \hat{\mu})^2  = \frac{1}{n} \sum_i (x_i - \bar{x})^2 \]
+    \item This is a biased estimator for $\sigma^2$. Unbiased is with $1/(n-1)$.
+
+    \item This next stuff is not really testable but can be interesting to see where it comes from.
+
+    \item To avoid confusion call $a_0$ the true value of a.
+    \item We have $\mathcal{L}(\vec{x}; \, a)$ and we want to know how well $\hat{a}$ estimates $a_0$.
+          \[ \pdv{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = \hat{a}} = 0 \]
+    \item Taylor expand around $a_0$:
+
+          \[ f(\hat{a}) = f(a_0) + f'(a_0) (\hat{a} - a_0) + \frac{1}{2} f''(a_0) (\hat{a} - a_0)^2 + \ldots \]
+    \item So we have:
+          \[ \pdv{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = \hat{a}} = \pdv{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = a_0} + (\hat{a} - a_0) \pdv[2]{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = a_0} + \ldots = 0 \]
+    \item For $n\rightarrow \infty$, $\hat{a} \rightarrow a_0$ (consistent estimator) so we can neglect higher order terms.
+          \[ \pdv{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = a_0} \rightarrow \pdv{\ln \mathcal{L}(\vec{x}; \, a)}{a} \Big|_{a = \hat{a}} = 0 \]
+\end{itemize}
