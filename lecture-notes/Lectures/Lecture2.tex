@@ -1,153 +1,153 @@
-\section{Bayesian Inference and Random Variables}
+\section{Thursday, September 11th 2025}
 
 \subsection{Bayes' Formula}
 
 \begin{itemize}
-    \item Let $E$, $F$ be events:
-          \[ E = EF \cup EF^c \]
-          \[ P(E) = P(EF) + P(EF^c) \]
-          \[ P(E) = P(E|F)P(F) + P(E|F^c)P(F^c) \]
-          \[ P(E) = P(E|F)P(F) + P(E|F^c)(1 - P(F)) \]
+      \item Let $E$, $F$ be events:
+            \[ E = EF \cup EF^c \]
+            \[ P(E) = P(EF) + P(EF^c) \]
+            \[ P(E) = P(E|F)P(F) + P(E|F^c)P(F^c) \]
+            \[ P(E) = P(E|F)P(F) + P(E|F^c)(1 - P(F)) \]
 
-    \item \textbf{Example:} Suppose a blood test is 95\% effective in detecting a disease if the person has it. It also has a 1\% false positive rate. Suppose 0.5\% of the population has the disease.
+      \item \textbf{Example:} Suppose a blood test is 95\% effective in detecting a disease if the person has it. It also has a 1\% false positive rate. Suppose 0.5\% of the population has the disease.
 
-          \[ D = \text{person has disease} \]
-          \[ E = \text{test is positive} \]
+            \[ D = \text{person has disease} \]
+            \[ E = \text{test is positive} \]
 
-    \item We want:
-          \[ P(D|E) = \frac{P(ED)}{P(E)} \]
-          \[ P(D|E) = \frac{P(E|D)P(D)}{P(E|D)P(D) + P(E|D^c)(1 - P(D))} \]
-          \[ = \frac{0.95 \times 0.005}{0.95 \times 0.005 + 0.01 \times 0.995} = 0.32 \]
+      \item We want:
+            \[ P(D|E) = \frac{P(ED)}{P(E)} \]
+            \[ P(D|E) = \frac{P(E|D)P(D)}{P(E|D)P(D) + P(E|D^c)(1 - P(D))} \]
+            \[ = \frac{0.95 \times 0.005}{0.95 \times 0.005 + 0.01 \times 0.995} = 0.32 \]
 
-    \item So even with a positive test, there is only a 32\% chance of having the disease.
+      \item So even with a positive test, there is only a 32\% chance of having the disease.
 \end{itemize}
 
 \subsection{Law of Total Probability}
 
 \begin{itemize}
-    \item Let $\{F_i\}$ be mutually exclusive events such that:
-          \[ \cup_{i=1}^n F_i = S \]
-          Then for any event $E$:
-          \[ E = E \cap \left( \cup_{i=1}^n F_i \right) = \cup_{i=1}^n (E F_i) \]
-          \[ P(E) = P\left( \cup E F_i \right) = \sum_{i=1}^n P(E F_i) = \sum_{i=1}^n P(E|F_i)P(F_i) \]
+      \item Let $\{F_i\}$ be mutually exclusive events such that:
+            \[ \cup_{i=1}^n F_i = S \]
+            Then for any event $E$:
+            \[ E = E \cap \left( \cup_{i=1}^n F_i \right) = \cup_{i=1}^n (E F_i) \]
+            \[ P(E) = P\left( \cup E F_i \right) = \sum_{i=1}^n P(E F_i) = \sum_{i=1}^n P(E|F_i)P(F_i) \]
 \end{itemize}
 
 \subsection{Independent Events}
 
 \begin{itemize}
-    \item Generally, $P(E|F) \neq P(E)$.
-    \item If knowing $F$ does not change the probability of $E$:
-          \[ P(E|F) = \frac{P(EF)}{P(F)} = P(E) \]
-          \[ \boxed{P(EF) = P(E)P(F)} \]
+      \item Generally, $P(E|F) \neq P(E)$.
+      \item If knowing $F$ does not change the probability of $E$:
+            \[ P(E|F) = \frac{P(EF)}{P(F)} = P(E) \]
+            \[ \boxed{P(EF) = P(E)P(F)} \]
 \end{itemize}
 
 \subsubsection{Example: Rolling Two Dice}
 
 \begin{itemize}
-    \item Let:
-          \[ E_1 \equiv \text{sum} = 6 \]
-          \[ F \equiv \text{first die} = 4 \]
-          \[ E_1: \{(1,5), (2,4), (3,3), (4,2), (5,1)\} \]
-          \[ F: \{(4,1), (4,2), (4,3), (4,4), (4,5), (4,6)\} \]
-          \[ E_1 F = \{(4,2)\} \]
-          \[ P(E_1 F) = \frac{1}{36} \]
-          \[ P(E_1) = \frac{5}{36} \]
-          \[ P(F) = \frac{6}{36}  = \frac{1}{6} \]
-          \[ P(E_1) P(F) = \frac{5}{36} \times \frac{1}{6} = \frac{5}{216} \neq P(E_1 F) \]
+      \item Let:
+            \[ E_1 \equiv \text{sum} = 6 \]
+            \[ F \equiv \text{first die} = 4 \]
+            \[ E_1: \{(1,5), (2,4), (3,3), (4,2), (5,1)\} \]
+            \[ F: \{(4,1), (4,2), (4,3), (4,4), (4,5), (4,6)\} \]
+            \[ E_1 F = \{(4,2)\} \]
+            \[ P(E_1 F) = \frac{1}{36} \]
+            \[ P(E_1) = \frac{5}{36} \]
+            \[ P(F) = \frac{6}{36}  = \frac{1}{6} \]
+            \[ P(E_1) P(F) = \frac{5}{36} \times \frac{1}{6} = \frac{5}{216} \neq P(E_1 F) \]
 
-    \item Let:
-          \[ E_2 \equiv \text{sum} = 7 \]
-          \[ E_2: \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} \]
-          \[ E_2 F = \{(4,3)\} \]
-          \[ P(E_2) = \frac{6}{36} = \frac{1}{6} \]
-          \[ P(F) = \frac{1}{6} \]
-          \[ P(E_2 F) = \frac{1}{36} \]
+      \item Let:
+            \[ E_2 \equiv \text{sum} = 7 \]
+            \[ E_2: \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} \]
+            \[ E_2 F = \{(4,3)\} \]
+            \[ P(E_2) = \frac{6}{36} = \frac{1}{6} \]
+            \[ P(F) = \frac{1}{6} \]
+            \[ P(E_2 F) = \frac{1}{36} \]
 \end{itemize}
 
 \subsection{Random Variables and Probability Distributions}
 
 \begin{itemize}
-    \item $S = \{ \text{all possible outcomes of stochastic process } X \}$
-          \[ x = \text{random variable} \]
-          \[ S = \text{finite or countable infinite: discrete random variable} \]
-          \[ S = \text{uncountable infinite: continuous random variable} \]
+      \item $S = \{ \text{all possible outcomes of stochastic process } X \}$
+            \[ x = \text{random variable} \]
+            \[ S = \text{finite or countable infinite: discrete random variable} \]
+            \[ S = \text{uncountable infinite: continuous random variable} \]
 
-    \item Continuous case:
-          \[ P(x_0, x_0 + dx) = p(x) dx \]
-          where $p(x)$ is the probability density function (pdf).
+      \item Continuous case:
+            \[ P(x_0, x_0 + dx) = p(x) dx \]
+            where $p(x)$ is the probability density function (pdf).
 
-    \item Discrete case:
-          \[ S = S_i \]
-          \[ p_i = \text{probability of } S_i \quad \text{(probability mass function, pmf)} \]
+      \item Discrete case:
+            \[ S = S_i \]
+            \[ p_i = \text{probability of } S_i \quad \text{(probability mass function, pmf)} \]
 
-          \[ 0 \leq P(S_i) \leq 1 \]
-          \[ 1 = P(S) \]
-          \[ 0 \leq p(x) \]
-          \[ \int_{-\infty}^{\infty} p(x) dx = 1 \]
+            \[ 0 \leq P(S_i) \leq 1 \]
+            \[ 1 = P(S) \]
+            \[ 0 \leq p(x) \]
+            \[ \int_{-\infty}^{\infty} p(x) dx = 1 \]
 \end{itemize}
 
 \subsection{Describing a Distribution}
 
 \begin{itemize}
-    \item To describe $p(x)$ in general we specify:
-          \begin{itemize}
-              \item \textbf{Mode} — peak value of $p(x)$
-              \item \textbf{Median} — 50\% cumulative value
-              \item \textbf{Mean} — average value of $x$ weighted by $p(x)$
-          \end{itemize}
+      \item To describe $p(x)$ in general we specify:
+            \begin{itemize}
+                  \item \textbf{Mode} — peak value of $p(x)$
+                  \item \textbf{Median} — 50\% cumulative value
+                  \item \textbf{Mean} — average value of $x$ weighted by $p(x)$
+            \end{itemize}
 \end{itemize}
 
 \subsection{Cumulative Distribution Function (CDF)}
 
 \begin{itemize}
-    \item
-          \[ F(x) = \int_{-\infty}^{x} p(x') dx' = P(X \leq x) \]
-          \[ F(-\infty) = 0, \quad F(\infty) = 1 \]
+      \item
+            \[ F(x) = \int_{-\infty}^{x} p(x') dx' = P(X \leq x) \]
+            \[ F(-\infty) = 0, \quad F(\infty) = 1 \]
 \end{itemize}
 
 \subsection{Expectation Values}
 
 \begin{itemize}
-    \item Expectation of any function $f(x)$ over $p(x)$:
-          \[ E(f) = \int_{\Omega} f(x) p(x) dx \]
-          \[ E \text{ is a linear operator: } E(af + bg) = aE(f) + bE(g) \]
+      \item Expectation of any function $f(x)$ over $p(x)$:
+            \[ E(f) = \int_{\Omega} f(x) p(x) dx \]
+            \[ E \text{ is a linear operator: } E(af + bg) = aE(f) + bE(g) \]
 
-    \item Expectation of powers of $x$:
-          \[ E(x^0) = E(1) = \int 1 \cdot p(x) dx = 1 \]
-          \[ E(x^1) = \int x p(x) dx \equiv \mu = \text{mean value of } x \]
-          \[ E(x^2) = \int x^2 p(x) dx \equiv \sigma^2 = \text{variance of } x \]
+      \item Expectation of powers of $x$:
+            \[ E(x^0) = E(1) = \int 1 \cdot p(x) dx = 1 \]
+            \[ E(x^1) = \int x p(x) dx \equiv \mu = \text{mean value of } x \]
+            \[ E(x^2) = \int x^2 p(x) dx \equiv \sigma^2 = \text{variance of } x \]
 \end{itemize}
 
 \subsection{Characteristic Function}
 
 \begin{itemize}
-    \item The characteristic function of $p(x)$:
-          \[ \phi(t) = \int_{-\infty}^{\infty} e^{itx} p(x) dx = E(e^{itx}) \]
-          \[ \phi(t) = E \left( 1 + itx + \frac{(itx)^2}{2!} + \dots \right) \]
-          \[ = 1 + it E(x) + \frac{(it)^2}{2!} E(x^2) + \dots \]
-          \[ = \sum_{k=0}^{\infty} \frac{(it)^k}{k!} \mu_{k'} \]
+      \item The characteristic function of $p(x)$:
+            \[ \phi(t) = \int_{-\infty}^{\infty} e^{itx} p(x) dx = E(e^{itx}) \]
+            \[ \phi(t) = E \left( 1 + itx + \frac{(itx)^2}{2!} + \dots \right) \]
+            \[ = 1 + it E(x) + \frac{(it)^2}{2!} E(x^2) + \dots \]
+            \[ = \sum_{k=0}^{\infty} \frac{(it)^k}{k!} \mu_{k'} \]
 
-    \item Moments from $\phi(t)$:
-          \[ \frac{d^n \phi(t)}{dt^n} \Big|_{t=0} = i^n \mu_{n'} \]
+      \item Moments from $\phi(t)$:
+            \[ \frac{d^n \phi(t)}{dt^n} \Big|_{t=0} = i^n \mu_{n'} \]
 \end{itemize}
 
 \subsection{Central Moments}
 
 \begin{itemize}
-    \item
-          \[ E((x-\mu)^n) = \int (x-\mu)^n p(x) dx \equiv \mu_n \]
-          \[ \mu = E(x) \]
+      \item
+            \[ E((x-\mu)^n) = \int (x-\mu)^n p(x) dx \equiv \mu_n \]
+            \[ \mu = E(x) \]
 
-    \item 1st central moment:
-          \[ E((x-\mu)^1) = E(x) - E(\mu) = \mu - \mu = 0 \]
+      \item 1st central moment:
+            \[ E((x-\mu)^1) = E(x) - E(\mu) = \mu - \mu = 0 \]
 
-    \item 2nd central moment (variance):
-          \[ E((x-\mu)^2) \equiv V(x) = \sigma^2 \]
+      \item 2nd central moment (variance):
+            \[ E((x-\mu)^2) \equiv V(x) = \sigma^2 \]
 
-    \item 3rd central moment (skewness):
-          \[ \text{skewness} = \frac{E((x-\mu)^3)}{\sigma^3} \]
+      \item 3rd central moment (skewness):
+            \[ \text{skewness} = \frac{E((x-\mu)^3)}{\sigma^3} \]
 
-    \item 4th central moment (kurtosis):
-          \[ \text{kurtosis} = \frac{E((x-\mu)^4)}{\sigma^4} - 3 \]
-          (The $-3$ ensures that the kurtosis of a normal distribution is 0.)
+      \item 4th central moment (kurtosis):
+            \[ \text{kurtosis} = \frac{E((x-\mu)^4)}{\sigma^4} - 3 \]
+            (The $-3$ ensures that the kurtosis of a normal distribution is 0.)
 \end{itemize}
