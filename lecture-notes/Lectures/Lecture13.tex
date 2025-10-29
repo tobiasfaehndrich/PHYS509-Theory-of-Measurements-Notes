@@ -86,7 +86,8 @@
             \[ \frac{-(a-\hat{a})}{V(\hat{a})} + \ldots \]
       \item Note that $V(\hat{a} - a_0) = V(\hat{a})$ because $a_0$ is constant and does not change the variance (it just shifts the distribution).
       \item So,
-            \[ \ln \mathcal{L}(a) = \ldots \text{ missed this part} \]
+            \[ \ln \mathcal{L}(a) = \ln \mathcal{L}(\hat{a}) - \frac{1}{2V(\hat{a})} \left( a - \hat{a} \right)^2 \]
+            \[ \mathcal{L} = \mathcal{L}(\hat{a}) \exp \left( -\frac{1}{2} (\frac{a - \hat{a}}{\sigma_{\hat{a}}})^2 \right) \]
 \end{itemize}
 
 \subsection{Goodness of Fit and the Kolmogorov–Smirnov Test}
