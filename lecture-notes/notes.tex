@@ -26,48 +26,10 @@
 \addtocontents{toc}{\protect\hypertarget{toc}{}}
 \tableofcontents
 
-\newpage
-\input{Lectures/Lecture1.tex}
 
-\newpage
-\input{Lectures/Lecture2.tex}
-
-\newpage
-\input{Lectures/Lecture3.tex}
-
-\newpage
-\input{Lectures/Lecture4.tex}
-
-\newpage
-\input{Lectures/Lecture5.tex}
-
-\newpage
-\input{Lectures/Lecture6.tex}
-
-\newpage
-\input{Lectures/Lecture7.tex}
-
-\newpage
-\input{Lectures/Lecture8.tex}
-
-\newpage
-\input{Lectures/Lecture9.tex}
-
-
-\newpage
-
-\input{Lectures/Lecture10.tex}
-
-\newpage
-
-\input{Lectures/Lecture11.tex}
-
-\newpage
-\input{Lectures/Lecture12.tex}
-\newpage
-\input{Lectures/Lecture13.tex}
-
-\newpage
-\input{Lectures/Lecture14.tex}
+\foreach \n in {1,...,15}{
+        \newpage
+        \input{Lectures/Lecture\n.tex}
+    }
 
 \end{document}
