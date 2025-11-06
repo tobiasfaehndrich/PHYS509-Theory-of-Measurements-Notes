@@ -1,0 +1,116 @@
+\section{Tuesday, November 4th 2025}
+
+\subsection{Likelihood in Hypothesis Testing and Nuisance Parameters}
+
+\begin{itemize}
+      \item Likelihood in Hypothesis Testing:
+            Use $\mathcal{L}(\vec{x}|\vec{\theta})$ to select between $H_0$ (null) and $H_1$ (alternative).
+            Parameters include both \textit{parameters of interest} and \textit{nuisance parameters}.
+
+      \item Nuisance Parameters with Constraints:
+            Nuisance parameters often have external measurements that provide probabilistic constraints,
+            e.g., $\theta_{\text{nuisance}} \sim \mathcal{N}(\theta_0, \sigma^2)$.
+            These are incorporated as additional terms in the likelihood:
+            \[
+                  \mathcal{L}_{\text{total}} = \mathcal{L}(\vec{x}|\vec{\theta}) \cdot p(\theta_{\text{nuisance}})
+            \]
+\end{itemize}
+
+\subsection{Bayes' Theorem and Its Application to Hypothesis Testing}
+
+\begin{itemize}
+      \item Bayes' Theorem:
+            Relates prior knowledge to observations via:
+            \[
+                  P(H|D) = \frac{P(D|H) \, P(H)}{P(D)}
+            \]
+            where $H$ = hypothesis, $D$ = data. This allows us to go from $\mathcal{L}(\vec{x}|H)$ to $P(H|\vec{x})$.
+      \item Bayes Theorem approach to hypothesis testing:
+            \[ P(H_{0} | x) = \frac{P(x | H_{0}) P(H_{0})}{P(x)} \]
+
+      \item Example: measure c = speed of light. In no sense is c a stochastic variable.
+      \item We have $\mathcal{L}(\vec{x} | H)$ and we want $P(H | \vec{x})$.
+      \item Compare to exponential that when Fourier transformed gives Cauchy distribution.
+      \item Bayes $\Rightarrow$ $\textcolor{blue}{posterior}$ (blue), $\textcolor{red}{likelihood}$ (red), $\textcolor{purple}{prior}$ (purple), $\textcolor{orange}{evidence}$ (orange).
+            \[ \textcolor{blue}{P(H|D)} = \frac{\textcolor{red}{P(D|H)} \textcolor{purple}{P(H)}}{\textcolor{orange}{P(D)}} \]
+
+            \[ P(H|D) = \frac{\mathcal{L}(D|H) \text{prior}}{\mathcal{L}(D)} \]
+            \[ p(\vec{\theta}|\vec{x}) = \frac{\mathcal{L}(\vec{x}|\vec{\theta}) \pi(\vec{\theta})}{\mathcal{L}(\vec{x})} \]
+            \[ \int \mathcal{L}(\vec{x}|\vec{\theta}) = 1 \]
+      \item Think conditional probability.
+            \[ p(\vec{x}) = p(\vec{x}|H_0) P(H_0) + p(\vec{x}|H_1) P(H_1) \]
+      \item As long as $H_0$ and $H_1$ span all possibilities.
+            \[ p(\vec{x}) = \int p(\vec{x}|\vec{\theta}) p(\vec{\theta}) d\vec{\theta} \]
+
+      \item Example: DNA evidence. $H_0$ = innocent, $H_1$ = guilty, $D$ = we have DNA evidence at crime.
+            \[ P(D) = P(D|H_0) P(H_0) + P(D|H_1) P(H_1) \]
+\end{itemize}
+
+\subsection{Maximum A Posteriori (MAP) Estimation}
+
+\begin{itemize}
+      \item Given data of x what value of theta is the most probable: i.e. maximum a posteriori (MAP) estimate (similar to MLE).
+      \item Posterior $= p(\vec{\theta}|\vec{x})$
+      \item Recall: $p(\vec{x}|\vec{\theta}) = \mathcal{L}(\vec{\vec{x}}|\vec{\theta})$
+      \item Now we have a way to add in prior information about $\vec{\theta}$
+            \[ p(\vec{\theta}|\vec{x}) = \frac{p(\vec{x}|\vec{\theta}) p(\vec{\theta})}{p(\vec{x})} \]
+            \[ \ln(p(\vec{\theta}|\vec{x})) = \ln(p(\vec{x}|\vec{\theta})) + \ln(p(\vec{\theta})) - \ln(p(\vec{x})) \]
+            \[ \pdv{}{\vec{\theta}} \ln(p(\vec{\theta}|\vec{x})) = \pdv{}{\vec{\theta}} \ln(p(\vec{x}|\vec{\theta})) + \pdv{}{\vec{\theta}} \ln(p(\vec{\theta})) = 0 \]
+      \item $\hat{\theta}_{MAP}$: Maximum A Posteriori estimate.
+      \item If prior is flat then MAP = MLE.
+      \item BUT my solution for $\hat{\theta}_{MAP}$ will depend on my choice of prior! i.e. $\neq$ your solution for $\hat{\theta}_{MAP}$
+      \item BUT as data get 'better, more' dependence $\sim$ disappears.
+      \item Example: 99\% I am nice, 1\% I am evil.
+      \item We can see in demo that with enough data the prior influence goes away, but it takes different amounts of data to finally get to the same answer.
+\end{itemize}
+
+\subsection{MAP Estimation for Normal Distribution with Gaussian Prior}
+
+\begin{itemize}
+      \item Example: estimate $\mu$ of sample. Drawn from $\mathcal{N}(\mu, \sigma^2)$ with $\sigma^2$ known.
+      \item Prior, $\mu = \mu_0$, $\mathcal{N}(\mu_0, \sigma_0^2)$.
+            \[ \mathcal{L} = \prod_{i=1}^{n} \frac{1}{\sqrt{2 \pi} \sigma} \exp\left( -\frac{(x_i - \mu)^2}{2 \sigma^2} \right) \]
+            \[ p(\vec{\theta}|\vec{x}) \sim \left( \prod_{i=1}^{n} \frac{1}{\sqrt{2 \pi} \sigma} \exp\left( -\frac{(x_i - \mu)^2}{2 \sigma^2} \right) \right) \cdot \frac{1}{\sqrt{2 \pi} \sigma_0} \exp\left( -\frac{(\mu_0 - \mu)^2}{2 \sigma_0^2} \right) \]
+
+            \[ \log p(\mu| \vec{x}) = -\frac{1}{2 \sigma^2} \sum_{i=1}^{n} (x_i - \mu)^2 - \frac{1}{2 \sigma_0^2} (\mu_0 - \mu)^2 + \cancelto{\text{const.}}{n \log \sqrt{2 \pi}\sigma} + \cancelto{\text{const.}}{\log \sqrt{2 \pi}\sigma_0} \]
+
+            \[ \dv{\log p(\mu|\vec{x})}{\mu} \Big|_{\hat{\mu}=0} = -\frac{1}{\sigma^2} (-2) \sum_{i=1}^{n} (x_i - \mu) - 2 \frac{1}{\sigma_0^2} (\hat{\mu} - \mu+0) \]
+
+            \[ \frac{1}{\sigma^2} \sum_{i=1}^{n} (x_i - \mu) - \frac{\hat{\mu}-\mu_0}{\sigma_0^2} = 0 \]
+
+            \[ \hat{\mu} \left( \frac{n^2}{\sigma^2} + \frac{1}{\sigma_0^2} \right) = \frac{1}{\sigma^2} \sum_{i=1}^{n} x_i + \frac{1}{\sigma_0^2} \mu_0 \]
+
+            \[ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i \]
+      \item Rearranging gives:
+            \[ \hat{\mu}_{MAP} = \frac{\frac{1}{\sigma^2} \sum_{i=1}^{n} x_i + \frac{1}{\sigma_0^2} \mu_0}{\frac{n}{\sigma^2} + \frac{1}{\sigma_0^2}} \]
+      \item This is a weighted average of the sample mean and the prior mean.
+      \item As $n \to \infty$, $\hat{\mu}_{MAP} \to \hat{\mu}_{MLE}$.
+\end{itemize}
+
+\subsection{Conjugate Priors and the Beta Distribution}
+
+\begin{itemize}
+      \item Example:
+            \[ P(\vec{\theta}|\vec{x}) = P(\vec{x}|\vec{\theta}) P(\vec{\theta}) \]
+            Coin flip: $\theta$ = prob. of heads.
+            Bernoulli $\Rightarrow$: $x \in \{0,1\}$
+            \[ p(x) = \theta^{x} (1 - \theta)^{1-x} \]
+            Conjugate priors.
+      \item There used to be an old trick using Beta function.
+            \[ p(\theta) = \text{Beta}(\theta|\alpha,\beta) \]
+            \[ p(\theta) = \frac{\theta^{\alpha - 1} (1 - \theta)^{\beta - 1}}{B(\alpha, \beta)} \]
+      \item Now:
+            \[ \log p(\vec{\theta}|\vec{x}) = \log \mathcal{L}(\vec{x}|\vec{\theta}) + \log p(\vec{\theta}) \]
+      \item $\hat{\theta}_{MLE}$ is just $\bar{\theta}_{MAP}$ with uniform prior $p(\vec{\theta})$ (i.e. Uninformed prior).
+\end{itemize}
+
+\subsection{Choice of Prior: Practical Considerations and Pitfalls}
+
+\begin{itemize}
+      \item Example: Proposing Dark Matter (DM) experiment.
+            \begin{itemize}
+                  \item WIMP: $\sim 10^{12}$ eV
+                  \item Axion: $\sim 10^{-22}$ eV
+            \end{itemize}
+      \item Don't know so take flat prior, but then we end up with massive probability for WIMP and tiny for axion because axion is unbiased.
+\end{itemize}
