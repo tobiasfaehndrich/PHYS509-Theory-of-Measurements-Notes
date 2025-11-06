@@ -1,0 +1,112 @@
+\section{Thursday, November 6th 2025}
+
+\begin{itemize}
+    \item The following notes from this entire lecture are not testable.
+\end{itemize}
+
+\subsection{Deductive and Inductive Reasoning; Weak Syllogism and Bayesian Motivation}
+
+\begin{itemize}
+    \item How do we reason in this realm of deductive vs inductive logic (following textbook from ET Jaynes, from math of Polya around 1450)?
+    \item Aristotelian logic: deductive reasoning from true premises to true conclusions.
+          \[ A \Rightarrow B \]
+          i.e. if $A$ is true, then $B$ is true.
+    \item You can also say that $B$ is false if $A$ is false.
+    \item But if $B$ is true, $A$ may be true or false.
+    \item Simple Math Example: $A : x > 7$, $B : x > 5$:
+    \item If $x > 7$ then $x > 5$. i.e. if $A$ true then $B$ true.
+    \item But if A is false (i.e. $x \leq 7$) then $B$ may be true or false.
+    \item or another example: A: I tried to do a ``hard-flip'' on my skateboard. B: I will get hurt. If not A then B is false.
+    \item Inductive reasoning: from observations to general rules.
+    \item Almost all of science (IRL) reasoning is inductive.
+    \item ``weak syllogism'': outcomes are not a certainty, only a likelihood: If B is true, then A becomes more plausible.
+    \item This is the basis of Bayesian reasoning.
+    \item Example: A: If it is raining, B: the ground is wet. Then if the ground is wet. Therefore it is more plausible that it is raining.
+    \item Example: It will start to rain at 10am. B: it will get cloudy before 10am. If we see clouds at 9am, then it is more plausible that it will rain at 10am.
+    \item Example: Police officer at night. A: Hears a burglar alarm. B: sees a jewelry store with broken windows. Sees person in mask climbing out window with a bag of jewelry.
+    \item Science Example: A: If GR is true. B: then perihelion advance of Mercury. If we observe perihelion advance of Mercury, then GR becomes more plausible.
+    \item Science Example: If simplistic SUSY breaking mechanism is true, B: particular type of dark matter.
+\end{itemize}
+
+\subsection{Plausibility Notation and Consistency Requirements}
+
+\begin{itemize}
+    \item $A|B \equiv$ plausibility of A given B.
+    \item $A|B \in \mathcal{R}$ we will insist on self-consistency of our operations.
+    \item If $A|C$ is ``more plausible'' than $B|C$, then we write:
+          \[ A|C > B|C \]
+
+    \item If conclusions can be reached multiple ways, these must give same plausibility.
+    \item Equivalent states of knowledge must be represented by same plausibility.
+    \item Also require Qualitative correspondence with common sense reasoning.
+    \item $C + C'$ contains new information from C such that A becomes more plausible i.e.
+          \[ A | C' > A | C \]
+          and plausibility of B given A is not changed:
+          \[ B | A C' = B | A C \]
+          then plausibility of $A B | C' \ge A B | C$.
+    \item Also if $A|C' > A|C$ then $\bar{A}|C' < \bar{A}|C$.
+    \item We then can do some heavy math and show that the only consistent way to assign plausibilities is to identify them with probabilities that follow the rules of probability theory.
+\end{itemize}
+
+\subsection{Product Rule for Combined Plausibility}
+
+\begin{itemize}
+    \item We try to find a consistent rule for calculating plausibility of A B. We want $AB|C$ (i.e. a product rule).
+          \begin{itemize}
+              \item Decide $B = \text{True}, \qquad B|C$
+              \item Given B true decide if A is true: $A|BC$
+          \end{itemize}
+    \item Decide A = True, $A|C$, given A = True we need to decide if B = T, $B|AC$
+    \item Want: $AB|C = ?$
+    \item With (AB|C) we might have functions: $F(B|C, A|BC) = F(A|C, B|AC)$.
+    \item $A|C$, $B|C$, $A|BC$, $B|AC$
+    \item By looking at edge cases:
+          \[ B = \bar{A} \]
+    \item If $C \rightarrow C'$, then $B|C' > B|C$. But plausibility for A given is unchanged:
+          \[ A | BC' = A | BC \]
+    \item Now calculate consistency for: $ABC|D$
+    \item Take triple product and expand into singles as products.
+          \[
+              ABC|D = F(BC|D, A|BCD)
+          \]
+          \[ = F( F(C|D, B|CD), A|BCD) \]
+          \[ = F( C|D, AB|CD) \]
+          \[ = F(C|D)F(B|CD, A|BCD) \]
+    \item Note that for simplicity we can start using new parameters
+    \item From this we get the functional equation:
+          \[ F( F(x,y), z) = F( x, F(y,z)) \]
+    \item Associativity equation.
+\end{itemize}
+
+\subsection{Solution of the Associativity Equation via Transform}
+
+\begin{itemize}
+    \item Can find most general solution:
+          \[ u \equiv F(x,y), \qquad v \equiv F(y,z) \]
+          with x,y,z independent.
+          \[ \boxed{F(x,v) = F(u,z)} \]
+    \item Take derivatives wrt x,y,z.
+          \[ \pdv{F(x,v)}{x} \equiv F(x,v) = \pdv{F}{u}(u,z) \pdv{u}{x} \]
+    \item $F_1(x,y) = \pdv{F(x,y)}{x}$, $F_2(x,y) = \pdv{F(x,y)}{y}$
+
+    \item Divide.
+          \[ \frac{F_2(x,v)}{F_1(x,v)} F_1(y,z) = \frac{F_2(x,y)}{F_1(x,y)} \]
+
+    \item Set $G(x,y) = \frac{F_2(x,y)}{F_1(x,y)}$
+    \item Then:
+          \begin{enumerate}
+              \item u:
+                    \[ G(x,v) F_1(y,z) = G(x,y) \]
+              \item v:
+                    \[ G(x,v) F_2(y,z) = G(x,y) G(y,z) \]
+                    This last term is not a function of y.
+          \end{enumerate}
+    \item So:
+          \[ \pdv{u}{z} = \pdv{v}{y} \]
+          \[ G(x,v) F_{12}(y,z) = 0 \]
+          \[ \pdv{v}{y} = G(x,v) F_{21}(y,z) \]
+          \[ G(x,y) G(y,z) \text{independent of y} \]
+    \item Most generic form of $G(x,y) = H(x) / H(y)$
+    \item $w(x) = \exp\left( \int^{x} H(x') dx' \right)$
+    \item $w(F(y,z))  = w(v) = w(y) w(z)$
+\end{itemize}
