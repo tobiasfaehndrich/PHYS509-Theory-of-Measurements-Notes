@@ -1,0 +1,189 @@
+\section{Thursday, November 13th 2025}
+
+\begin{itemize}
+      \item Continuation of the previous lecture on building up the idea of plausibility and converting it into a numerical measure.
+      \item Again this is not testable material.
+\end{itemize}
+
+\subsection{Plausibility as a Generalization of Logic}
+
+\begin{itemize}
+      \item Plausibility is a generalization of logic to situations where we do not have certainty.
+            \[ (AB|C) \in \mathcal{R} \]
+            \[ (AB|C) = F[(B|C), (A|BC)] \]
+            \[ = F[(A|C), (B|AC)] \]
+\end{itemize}
+
+\subsection{Derivation of the Functional Form via Associativity}
+
+\begin{itemize}
+      \item Then $(ABC|D)$:
+            \[ F[ F( C|D, B|CD), A|BCD] = F[ C|D, F( B|CD, A|BCD)] \]
+            \[ F[F(x,y), z] = F[x, F(y,z)] \]
+            \[ u = F(x,y), \qquad v = F(y,z) \]
+            \[ \boxed{F(u,z) = F(x,v)} \]
+      \item Take derivatives wrt x,y,z.
+            \[ F_1(x,y) = \pdv{F(x,y)}{x}, \qquad F_2(x,y) = \pdv{F(x,y)}{y} \]
+            \[ G(x,y) = \frac{F_2(x,y)}{F_1(x,y)} \]
+      \item Then:
+            \[ Q = G(x,v) F_1(y,z) = G(x,y) \]
+            \[ R = G(x,v) F_2(y,z) = G(x,y) G(y,z) \]
+      \item Now use $Q$ and $R$:
+            \[ \pdv{Q}{z} = G_2(x,v) F_2(y,z) F_1(y,z) + G(x,v) F_{12}(y,z) = 0 \]
+            \[ \pdv{R}{y} = G_2(x,v) F_1(y,z) F_2(y,z) + G(x,v) F_{21}(y,z) = 0 \]
+      \item This is used to show that $G(x,y)G(y,z)$ is independent of y.
+            \[ \pdv{Q}{y} = 0 \Rightarrow G(x,v) F_{12}(y,z) = 0 \]
+            \[ \pdv{R}{y} = 0 \Rightarrow G(x,y) G(y,z) \text{ is independent of y} \]
+      \item General form is $G(x,y) = r \cdot H(x) / H(y) \qquad r \in \mathcal{R}$
+      \item Pick $y_0$ s.t. $G(x,y_0) \neq 0$, $r=G(y_0, y_0)$:
+      \item Define: $H(x) = G(x,y_0)$
+            \[ G(x,y) G(y,z) = G(z,y_0) G(y_0, z) \]
+            $z = y_0$ gives:
+            \[ G(x,y) G(y,y_0) = G(x,y_0) G(y_0,y_0) \]
+            \[ G(x,y) H(y) = H(x) r \]
+            \[ \boxed{G(x,y) = r \frac{H(x)}{H(y)}} \]
+      \item using our first expression
+            \[ G(x,v) F_1(y,z) = G(x,y) \]
+      \item we have
+            \[ r \frac{H(x)}{H(v)} F_1(y,z) = r \frac{H(x)}{H(y)} \]
+            \[ F_1(y,z) = \frac{H(v)}{H(y)} \]
+      \item then using our second expression
+            \[ r \frac{H(x)}{H(v)} F_2(y,z) = r \frac{H(x)}{H(y)} \cdot r \frac{H(y)}{H(z)} \]
+      \item we have
+            \[ F_2(y,z) = \frac{r H(v)}{H(z)} \]
+      \item Recall that $v = F(y,z)$
+            \[ dv = dF(y,z) = F_1(y,z) dy + F_2(y,z) dz \]
+            \[ dv = \frac{H(v)}{H(y)} dy + \frac{r H(v)}{H(z)} dz \]
+      \item Divide by $H(v)$
+            \[ \frac{1}{H(v)} dv = \frac{1}{H(y)} dy + \frac{r}{H(z)} dz \]
+      \item F was shown earlier to be monotonic, so the derivatives of the functions are non-zero. So G is positive, and H is G's at some fixed point, so H is also non-zero.
+      \item We can then integrate on both sides.
+            \[ \int \frac{1}{H(v)} dv = \int \frac{1}{H(y)} dy + \int \frac{r}{H(z)} dz \]
+      \item Let $I(x) = \int \frac{1}{H(x')} dx'$
+            \[ I(v) = I(y) + I(r z) \]
+      \item We can exponentiate both sides.
+            \[ \e^{I(v)} = \e^{I(y)} \cdot \e^{I(r z)} \]
+      \item Let $w = \e^{I} = \exp \int^x \frac{1}{H(x')} dx'$
+            \[ \boxed{w(F(y,z)) = w(y) \cdot w^r(z)} \]
+      \item Now recall, $u = F(x,y), \qquad v = F(y,z)$:
+            \[ F(x,v) = F(u,z) \]
+      \item So:
+            \[ w(F(x,v)) = w(x) w^r(v) = w(F(u,z)) = w^r(z) w(u) \]
+      \item So:
+            \[ r^2 = r \Rightarrow r = 1 \]
+      \item So we have:
+            \[ \boxed{ w(F(x,y)) = w(x) \cdot w(y) } \]
+            \[ \boxed{ F(x,y) = w^{-1}( w(x) \cdot w(y) ) } \]
+\end{itemize}
+
+\subsection{Product Rule for Plausibility}
+
+\begin{itemize}
+      \item Recall we wanted the product rule for plausibility.
+            \[ \boxed{w(AB|C) = w(A|C) \cdot w(B|C)} \]
+            \[ \boxed{ w(AB|C) = w(B|AC) \cdot w(A|C) } \]
+      \item Suppose A is certain if C is certain (i.e. $C =$ True)
+      \item Then: $(AB|C) = (B|C)$
+      \item Then: $w(AB|C) = w(B|C)$
+      \item Then: $w(AB|C) = w(A|BC) \cdot w(B|C)$
+      \item Then: $w(AB|C) = w(A|C) \cdot w(B|C)$
+      \item So:
+            \[ \boxed{w(A|C) = 1 } \qquad \text{if A is certain if C is given as True}\]
+      \item If A is impossible given C is true:
+            \[ (A|C) = \text{False} \]
+            \[ (AB|C) = \text{False} \]
+      \item Then:
+            \[ w(AB|C) = w(A|BC) \cdot w(B|C) \]
+            \[ w(A|C) = w(A|C) \cdot w(B|C) \]
+      \item So case $ w(A|C) = 0$ (or $w = \infty$), take $w' = 1/w$.
+      \item $ \exists w $ satisfies product rule. $0 \leq w(x) \leq 1 , \qquad \forall$ plausibilities.
+\end{itemize}
+
+\subsection{Sum Rule for Plausibility}
+
+\begin{itemize}
+      \item Sum rule, any proposition A:
+            \[ A \bar{A} = F \]
+            \[ A + \bar{A} = \text{True} \]
+      \item Set $u = w(A|B)$, $v = w(\bar{A}|B)$
+      \item Must exist S, s.t.
+            \[ v = S(u) \]
+      \item with constraints:
+            \[ S(0) = 1, \qquad S(1) = 0 \]
+      \item Can swap A and $\bar{A}$:
+            \[ u \text{ must } = S(v) \]
+      \item So:
+            \[ u = S(S(u)) \]
+            \[ S^{-1}(u) = S(u) \]
+      \item Skipping some steps, after lots of algebra we get:
+            \[ S(x) = (1-x^{m})^{1/m} \]
+      \item for $0 \leq x \leq 1$
+      \item for $0 < m < \infty$
+      \item So we have:
+            \[ w(\bar{A}|B) = (1 - (w(A|B))^{m})^{1/m} \]
+      \item This is the sum rule for plausibilities.
+            \[ w^m(\bar{A}|B) = 1 - w^m(A|B) \]
+            \[ \boxed{ w^m(A|B) + w^m(\bar{A}|B) = 1 } \]
+            For some m.
+            \[ w^m(AB|C) = w^m(A|BC) \cdot w^m(B|C) \]
+      \item Then $w' = w^m$ so take $m=1$ for simplicity.
+\end{itemize}
+
+\subsection{Identification of Plausibility with Probability}
+
+\begin{itemize}
+      \item Finally $\exists $ function $w^m(x) \equiv p(x)$ s.t. :
+            \[ p(AB|C) = p(A|BC) \cdot p(B|C) \]
+            \[ = p(B|AC) \cdot p(A|C) \]
+            \[ p(A|C) + p(\bar{A}|C) = 1 \]
+            where $0 \leq p(x) \leq 1$ in monotonic in plausibility.
+      \item  Any logical function can be expressed in terms of AND, NOT.
+\end{itemize}
+
+\subsection{Application to Deductive Logic}
+
+\begin{itemize}
+      \item Deductive logic:
+            \[ A \Rightarrow B \]
+      \item $A$ is True, so $B$ is True.
+      \item $B$ is False, so $A$ is False.
+      \item Define $C =$ prop that $A \Rightarrow B$
+            \[ p(AB|C) = p(B|AC) \cdot p(A|C) \]
+            or
+            \[ p(B|AC) = \frac{p(AB|C)}{p(A|C)} \]
+            and
+            \[ p(A\bar{B}|C) = p(A|\bar{B}C) \cdot p(\bar{B}|C) \]
+            $\Rightarrow$
+            \[ p(A|\bar{B}C) = \frac{p(A\bar{B}|C)}{p(\bar{B}|C)} \]
+      \item But $A \Rightarrow B$ means $A\bar{B}$ is impossible.
+            \[ p(A\bar{B}|C) = 0 \]
+            \[ p(A|\bar{B}C) = 0 \]
+      \item Now another case:
+            \[ p(A B | C) = p(A|BC) \cdot p(B|C) \]
+            \[ = p(B|AC) \cdot p(A|C) \]
+            $\Rightarrow$
+            \[ p(A|BC) = \frac{p(B|AC) \cdot p(A|C)}{p(B|C)} \]
+            $A \Rightarrow B$ means if B is True, then A is more plausible.
+            \[ p(B|AC) = 1 \]
+            \[ p(B|C) \leq 1 \]
+            \[ \boxed{ p(A|C) \leq \frac{p(A|C)}{p(B|C)} } = p(A|BC) \]
+      \item Now $A \Rightarrow B$ means if A is False, then B is less plausible.
+            \[ p(B|\bar{A}C) = \frac{p(\bar{A}|BC) p(B|C)}{p(\bar{A}|C)} \]
+            \[ p(A|BC) \geq p(A|C) \]
+            so $p(\bar{A}|BC) \leq p(\bar{A}|C)$
+            \[ \boxed{ p(B|\bar{A}C) \leq \frac{p(\bar{A}|C) p(B|C)}{p(\bar{A}|C)} \leq p(B|C) } \]
+\end{itemize}
+
+\subsection{Mutually Exclusive and Exhaustive Propositions}
+
+\begin{itemize}
+      \item So we will see next class:
+      \item $A_1, A_2, \ldots, A_n$ mutually exclusive, exhaustive propositions.
+      \item We also have B proposition.
+      \item $A_i$ = everything that can happen.
+      \item $\Rightarrow p(A_i| B)$ B says nothing
+      \item $A_i A_j = F$
+      \item $p(A_i | B) = \frac{1}{n}$
+            \[ \boxed{ p\left(\sum(A_i) | B \right) = 1} \]
+      \item (i.e. $p$(certain$| B$) $= 1$)
+\end{itemize}
