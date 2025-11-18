@@ -1,0 +1,132 @@
+\section{Tuesday, November 18th 2025}
+
+\subsection{Continuous Variables: CDF and PDF}
+
+\begin{itemize}
+    \item (1)
+          \[ 0 \le p( \, ) \le 1 \]
+    \item Continuous variables in $y=m x + b$
+    \item f is continuous and real-valued
+    \item $F=f\le q$
+    \item $F' = f > q$
+    \item given data D
+          \[ p(F|DI) = G(q) \]
+    \item where I is other information
+    \item Take range
+          \begin{itemize}
+              \item $A \equiv f \le a$
+              \item $B \equiv f \le b$
+              \item $C \equiv a \leq f \le c$
+          \end{itemize}
+          \[ B = A + C \]
+          \[ P(AC|I) = 0 \]
+          \[ P(B|DI) = P(A|DI) + P(C|DI) \]
+    \item $G(b) = G(a) + P(C|DI)$
+    \item $P(a< f \le b | DI) = G(b) - G(a)$
+    \item $P(a< f \le b | DI) = \int_{a}^{b} g(f) \, df$
+    \item where $g(f)$ is the probability density function of $f$
+    \item $g(f) = \frac{dG}{df}$
+\end{itemize}
+
+\subsection{Priors and Conjugate Families}
+
+\begin{itemize}
+    \item \underline{Priors:}
+    \item Conjugate Priors is matched to particular probability distribution forms.
+    \item Example: Beta prior + Bernoulli, Binomial, Geometric,
+    \item Data $+$ Prior $\rightarrow$ Posterior $=$ same family as prior $=$ Beta
+    \item Pressure to pick prior that is least informative, most unbiased.
+\end{itemize}
+
+\subsection{Fisher Information and Reparameterization}
+
+\begin{itemize}
+    \item Recall from deriving the variance and MLE:
+          \[ \dv{\mathcal{L}(x|\theta)}{\theta} = \dv{\log \mathcal{L}}{\theta} \mathcal{L}(\vec{x}|\theta) \]
+          \[ 1 = \int \mathcal{L}(\vec{x}|\theta) \, d\vec{x} \qquad \forall \theta \]
+          \[ 0 = \int \dv{\log \mathcal{L}}{\theta} \mathcal{L}(\vec{x}|\theta) \, d\vec{x}  = E_x \left( \dv{\log \mathcal{L}}{\theta} \right) \]
+    \item Define Fisher Information
+          \[ 0 = \int \left( \dv[2]{\log \mathcal{L}}{\theta} \mathcal{L} + \left( \dv{\log \mathcal{L}}{\theta} \right)^2 \mathcal{L} \right) \, d\vec{x} \]
+          \[ - E \left( \dv[2]{\log \mathcal{L}}{\theta} \right) = E \left( \left( \dv{\log \mathcal{L}}{\theta} \right)^2 \right) \equiv I(\theta)  = \text{Fisher Information} \]
+    \item Multiple vars $\theta$
+          \[ I_{i,j}(\theta) = E\left( \dv[2]{\log \mathcal{L}}{\theta_i \partial \theta_j} \right) \]
+    \item MLE $\hat{\theta}$ Hessian
+    \item + (Co)Variance $V_{i,j}(\hat{\theta}) = -\frac{1}{H_{i,j}(\hat{\theta})} = \frac{1}{I_{i,j}(\hat{\theta})}$
+    \item I is large $\Rightarrow$ large curvature
+    \item Likelihood $\mathcal{L}$ is reparametrization invariant, Hessian (so I) is not.
+    \item Doing this in 1D for simplicity
+    \item $\alpha = g(\theta)$
+    \item $\theta = g^{-1}(\alpha) = h(\alpha)$
+    \item $l(\theta) = \log \mathcal{L} (x|\theta)$
+    \item $\hat{l}(\alpha) = l(h(\alpha))$
+          \[ \dv{\hat{l}}{\alpha} = l'(h(\alpha)) h'(\alpha) \]
+    \item At MLE point $\hat{\theta}$,
+    \item $a = g(\hat{\theta})$
+    \item $\hat{l}'(g(\hat{\theta})) = l'(\hat{\theta}) h'(g(\hat{\theta})) = 0$
+    \item $\hat{\alpha} = \text{MLE in terms of } \alpha = g(\hat{\theta})$
+    \item At MLE:
+          \[ \hat{l}''(\alpha) = l''(h(\alpha)) (h'(\alpha))^2 + l'(h(\alpha)) h''(\alpha)  = l''(h(\alpha)) (h'(\alpha))^2 \]
+          \[ \hat{l}''(\alpha) = l''(\hat{\theta}) h'(\hat{\alpha})^2 \]
+    \item Where the $l''(\hat{\theta})$ is the Hessian / curvature in terms of $\theta$
+    \item So:
+
+          \[ \boxed{\dv[2]{\log \mathcal{L}}{\alpha} = \dv[2]{\log \mathcal{L}}{\theta} \left( \dv{\theta}{\alpha} \right)^2 } \]
+    \item $V(\hat{\alpha}) = V(\hat{\theta}) \left( \dv{\alpha}{\theta} \right)|_{\hat{\theta}}$
+    \item If you look at delta log likelihood from MLE point, it is invariant under reparametrization.
+    \item Now:
+          \[ E_x\left( \dv{\log \mathcal{L}(\vec{x}|\alpha)}{\alpha} \right) = E_x \left( \dv{\log \mathcal{L}(\vec{x}|\theta)}{\theta} \left(\dv{\theta}{\alpha}\right)^2 \right) \]
+    \item So Fisher Information transforms as:
+          \[\boxed{ I_{\alpha}(\alpha) = I_{\theta}(\theta) \left( \dv{\theta}{\alpha} \right)^2 } \]
+    \item Let's let $\pi(\theta)$ be the prior in terms of $\theta$
+          \[ \pi = \text{prior} = \pi_{\theta}(\theta) \]
+    \item $\pi_{\alpha}$ is another prior in terms of $\alpha$
+    \item We want:
+          \[ \pi_{\theta}(\theta) \, d\theta = \pi_{\alpha}(\alpha) \, d\alpha \]
+    \item We want:
+          \[ \pi_{\alpha}(\alpha) = \pi_{\theta}(\theta) \left| \dv{\theta}{\alpha} \right| \]
+          \[ I_{\alpha}(\alpha) = I_{\theta}(\theta) \left( \dv{\theta}{\alpha} \right)^2 \]
+          \[ \sqrt{I_{\alpha}(\alpha)} = \sqrt{I_{\theta}(\theta)} \left| \dv{\theta}{\alpha} \right| \]
+    \item So if we pick:
+          \[ \boxed{ \pi = \sqrt{I} } \]
+    \item then this gives us a parameter invariant prior called the Jeffreys Prior.
+\end{itemize}
+
+\subsection{Jeffreys Prior: Bernoulli Trial Example}
+
+\begin{itemize}
+    \item Example with Bernoulli 1 trial:
+          \[ \mathcal{L}(x|p) = p^x (1-p)^{1-x} \qquad x \in \{0,1\} \]
+          \[ \log \mathcal{L} = x \log p + (1-x) \log(1-p) \]
+          \[ \dv{\log \mathcal{L}}{p} = \frac{x}{p} - \frac{1-x}{1-p} = \frac{x-x/p-p+x/p}{p(1-p)} = \frac{x}{p(1-p)} - \frac{1}{1-p} = \frac{x}{p(1-p)} - \frac{1}{1-p} \]
+          \[ \dv[2]{\log \mathcal{L}}{p} = -\frac{x}{p^2(1-p)^2} (1-p-p) - \frac{1}{(1-p)^2} \]
+    \item Moving to expectation value:
+          \[ E(x) = p \qquad \text{For Bernoulli 1 trial}\]
+          \[ I(p) = -E(\dv[2]{\log \mathcal{L}}{p}) = \frac{p(1-2p)}{p^2(1-p)^2} - \frac{1}{(1-p)^2} = \frac{1-2p+p}{p(1-p)^2} = \frac{1}{p(1-p)} \]
+    \item Jeffreys Prior for Bernoulli trial:
+          \[ \pi(p) = \sqrt{I(p)} = \frac{1}{\sqrt{p(1-p)}}  = \frac{1}{p^{1/2}(1-p)^{1/2}}\]
+          \[ \pi_p = \text{Beta}(1/2,1/2) \]
+          \[ \text{Beta}(a,b) = \frac{p^{a-1}(1-p)^{b-1}}{B(a,b)} \]
+\end{itemize}
+
+\subsection{Maximum Entropy Principle}
+
+\begin{itemize}
+    \item Another way to get priors is the Principle of Maximum Entropy (i.e. least information)
+    \item Shannon showed can quantify information using entropy.
+          \[ p_i = \text{prob of outcome} x_i \]
+          \[ H(p) = - \sum_i p_i \log p_i  = \text{information} \]
+    \item Rule: least information consistent with whatever else I know about the data.
+    \item Use Lagrange multipliers
+          \[ L(\vec{p},\lambda) = - \sum_i p_i \log p_i + \lambda \left( \sum_i p_i - 1 \right) \]
+          \[ \pdv{L}{p_i} = -\log p_i - 1 + \lambda \]
+          \[ \log p_j = \lambda - 1 \]
+          \[ p_i = p_j \qquad \forall i,j \]
+          \[ \sum_i p_i = 1 \Rightarrow p_i = \frac{1}{n} \]
+    \item So maximum entropy prior with no other constraints is uniform.
+          \[ n p_i = 1 \]
+
+    \item we might know $\mu = \text{mean}$, so then you would have:
+          \[ \lambda_1 (\sum_i p_i - 1) + \lambda_2 (\sum_i x_i p_i - \mu) \]
+    \item Then you would get an exponential distribution. We will show this more in the next lecture.
+    \item Another example is if we know variance, then we get a Gaussian distribution.
+\end{itemize}
