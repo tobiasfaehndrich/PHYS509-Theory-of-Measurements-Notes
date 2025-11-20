@@ -1,0 +1,130 @@
+\section{Thursday, November 20th 2025}
+
+\subsection{Overview of Prior Distributions}
+
+\begin{itemize}
+    \item Priors:
+    \item Jeffreys Prior:
+          \[ \pi(\theta) = \sqrt{I(\theta)} \]
+    \item Reference Prior:
+          \[ \pi(\vec{\theta}) = \sqrt{ \det I(\vec{\theta}) } \]
+    \item Max Entropy Prior -- knowledge of future e.g. mean
+    \item Others...
+\end{itemize}
+
+\subsection{Maximum Entropy Prior with Known Mean}
+
+\begin{itemize}
+    \item Constraint:
+          \[ \sum_i p_i = 1 \]
+    \item Max entropy:
+          \[ p_i = 1/n \]
+    \item know mean $\mu = \sum x_i p_i$
+    \item using Lagrange multipliers form:
+          \[ L(p, \lambda_0, \lambda_1) = -\sum_i p_i \log p_i + \lambda_0 \left( \sum_i p_i - 1 \right) + \lambda_1 \left( \sum_i x_i p_i - \mu \right) \]
+    \item Take all derivatives and solve.
+          \[ \pdv{L}{p_i} = - \left( \log p_i + 1 \right) + \lambda_0 + \lambda_1 x_i = 0 \]
+          \[ \log p_j = \lambda_0 - 1 + \lambda_1 x_j \]
+          \[ p_j = \exp(\lambda_0 - 1) \exp(\lambda_1 x_j) \]
+          \[ p_j = C \exp( \beta x_j) \]
+          \[ \sum_i p_i = 1 \Rightarrow C \sum e^{\beta x_i} = 1 \]
+          \[ C = \frac{1}{\sum_i e^{\beta x_i}} = \frac{1}{Z(\beta)} \]
+
+
+    \item Know the mean means that your prior has an exponential form.
+    \item Let us see:
+
+          \[ \boxed{ p_i = e^{\beta x_i} / Z(p)} \]
+          with $\mu$ constraint
+          \[ \mu = \frac{\sum x_i e^{\beta x_i}}{Z(\beta)} \]
+          \[ \pdv{Z}{\beta} = \sum_i x_i e^{\beta x_i} = \frac{Z'(\beta)}{Z(\beta)} \equiv \mu(\beta) = \pdv{\log Z}{\beta} \]
+    \item Form $\mu(\beta) - \mu$, Find root $\beta$ such that $\mu(\beta) - \mu = 0$
+    \item Use numerical methods.
+\end{itemize}
+
+\subsection{Maximum Entropy for Continuous Variables}
+
+\begin{itemize}
+
+
+    \item Often seen as generalization of entropy definition to continuous variables:
+          \[ \sum p_i \log p_i \rightarrow H(\theta) = -\int p(\theta) \log p(\theta) \, d\theta \]
+    \item Start with binned distribution:
+          \[ H_{\Delta} = - \sum_i p_i \log p_i \]
+          with width $\Delta x_i$
+          \[ p_i = \int_{\text{ith bin}} p(x) \, dx \]
+          \[ H_{\Delta} = -\sum p(x_i) \Delta x_i \log (p(x_i) \Delta x_i) \]
+    \item Take same width $\Delta x_i = \Delta$
+          \[ = - \sum p(x_i) \Delta \log p(x_i) - \log(\Delta) \left( \sum p(x_i) \Delta \right) \]
+          \[ \rightarrow = - \int p(x) \log( p(x) ) \, dx - \log(\Delta) \int p(x) \, dx \]
+          where the log delta term goes to infinity as $\Delta \to 0$ and integral of p(x) is 1.
+    \item Max entropy of continuous variable in range $[a,b]$:
+          \[ H(\theta) = - \int_a^b p(\theta) \log p(\theta) \, d\theta  + \lambda \left( \int_a^b p(\theta) \, d\theta - 1 \right) \]
+    \item Then:
+          \[ \frac{\delta H}{\delta p(\theta)} = - \left( \log p(\theta) + 1 \right) + \lambda = 0 \]
+          \[ \log p(\theta) = \lambda - 1 \]
+          \[ p(\theta) = \text{Constant} = C \]
+    \item Apply constraint:
+          \[ \int_a^b C \, d\theta = 1 \]
+          \[ C = \frac{1}{b-a} \]
+          i.e. $p = 1/(b-a)$ uniform distribution.
+    \item If a,b $ = (-\infty, \infty)$ then no max entropy distribution exists.
+    \item This is called the ``Improper Prior'', $\rightarrow \int \neq 1$
+    \item Then:
+          \[ p(\theta | D) = \frac{p(D | \theta) p(\theta)}{\int p(D | \theta) p(\theta) \, d\theta} \]
+\end{itemize}
+
+\subsection{Scale Invariant and Location Invariant Priors}
+
+\begin{itemize}
+    \item Measure data in units
+    \item get x
+    \item Switch to new units in scale factor $\alpha$
+          \[ x' = \alpha x \]
+          \[ p(x|I) \, dx = p(x'|I) \, dx' \]
+          \[ dx' = \alpha \, dx \]
+          \[ p(x|I) \, dx = p(\alpha x | I) \alpha \, dx \]
+          \[ \Rightarrow \alpha p(\alpha x | I) = p(x | I) \]
+          \[ f(x) = \alpha f(\alpha x) \]
+          \[ \boxed{ f(x) = \frac{C}{x} } \]
+          $\equiv $ Scale Invariant Jeffreys Prior for Scale Parameters ($1/x$ prior)
+    \item Limits $x_{\text{min}}$ and $x_{\text{max}}$ needed to normalise.
+          \[ \int_{x_{\text{min}}}^{x_{\text{max}}} \frac{C}{x} \, dx = 1  = C \log \left( \frac{x_{\text{max}}}{x_{\text{min}}} \right) \]
+    \item Alternatively suppose we are measuring location of something
+          \[ p(R|I) = \text{position is at radius r to radi from sun} \]
+    \item Change origin $R' = R + C$:
+          \[ p(R|I) \, dR = p(R' | I) \, dR' \]
+          \[ p(R|I) = p(R + C | I) \]
+    \item Then with limits $x_{\text{min}}$ and $x_{\text{max}}$:
+          \[ \int_{x_{\text{min}}}^{x_{\text{max}}} C = C(x_{\text{max}} - x_{\text{min}})  = 1 \]
+          \[ C = \frac{1}{x_{\text{max}} - x_{\text{min}}} \]
+          \[ p(R) = \text{constant} \]
+    \item Location invariant prior -- uniform prior.
+\end{itemize}
+
+\subsection{Nuisance Parameters and Marginalization}
+
+\begin{itemize}
+    \item Start:
+          \[ P(\theta_1, \theta_2, \ldots, \theta_n | D, I) \]
+          \[ y = mx +b \]
+          \[ P(mb | DI) \]
+          want:
+          \[ P(m | DI) = \int P(m,b | DI) \, db \]
+    \item Note that:
+          \[ P(x,y) \Rightarrow P(x) = \int P(x,y) \, dy \]
+    \item Marginalization is integrating out nuisance parameters.
+    \item $\hat{m}$, $\hat{b}$
+          \[ P(\theta_1, \theta_2 | D, I) = p(D | \theta_1, \theta_2, I) p(\theta_1, \theta_2) / (\int (\cdot ) d\theta_1 d\theta_2 ) \]
+    \item Sample of $\theta_1$, and $\theta_2$, then we can marginalize numerically by ignoring $\theta_2$ values.
+    \item In this case we get a posterior distribution for $\theta_1$.
+    \item Lots of ways to sample:
+          \begin{itemize}
+              \item Grid Sampling
+              \item Random Sampling
+              \item MCMC Sampling (Markov Chain Monte Carlo)
+          \end{itemize}
+    \item We will continue this next lecture.
+    \item Then we will have all of the machinery to solve problems in any way we want:
+    \item Bayesian, LS, MLE, MAP, MaxEnt, Frequentist, etc.
+\end{itemize}
