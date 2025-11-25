@@ -1,0 +1,114 @@
+\section{Tuesday November 11th 2025}
+
+\subsection{Inverse Transform Sampling}
+\begin{itemize}
+      \item We want to generate a sampling from a given pdf
+      \item If available it us usually the best (but not usually possible...)
+      \item Idea: Consider the CDF $F_x$ of some PDF $f(x)$, $x \sim f(x)$, e.g. $f(x) = \lambda e^{-\lambda x}$
+            \[ F_x(x) = \int_{-\infty}^{x} f(t) dt \]
+            \[ = \text{Pr}(X \leq x) \]
+            \[ F_x : [0,1] \]
+      \item Let $y=F_x(x)$ random variable:
+      \item choose x by $f(x)$, then get $y = F_x x$
+
+            \includegraphics[width = 0.7\linewidth]{Images/lec21-inverse_transform_sampling.png}
+
+      \item Prob of $y = F_x(x)$ is uniform
+      \item Inverse $F_x^{-1}$ will map y to x
+      \item $\text{Pr}(Y) \sim U(0,1)$
+      \item Uniform distribution satisfied
+      \item $f_y(y) = \frac{dF_y(y)}{dy}$
+      \item What is $F_y(y)$? $y \sim U(0,1)$
+            \[ F_y(y) = \text{Pr}(Y\leq y)\]
+            \[ = \text{Pr}(F_x(x) \leq y) \]
+            \[ = \text{Pr}(X \leq F_x^{-1}(y))\]
+            \[ = F_x(F_x^{-1}(y)) = y \]
+      \item F is monotonic increasing
+      \item Let $Y = F_x(x)$
+            \[ X = F'(Y) , \qquad \text{where} Y\sim U(0,1) \]
+      \item Pick u from U(0,1)
+      \item Calculate $x =F^{-1}_x(u)$
+      \item this will be distributed as $X \sim f(x)$
+            \[ f(x) = \lambda e^{-\lambda x} \]
+      \item CDF:
+            \[ F_x(x) = \int_{0}^{x} \lambda e^{-\lambda t} dt \]
+            \[ = 1 - e^{-\lambda x} \]
+      \item Pick $u \sim U(0,1)$
+            \[ u = F_x(x) = 1 - e^{-\lambda x} \]
+            \[ e^{-\lambda x} = 1 - u \]
+            \[ -\lambda x = \log(1-u) \]
+            \[ \boxed{x = -\frac{1}{\lambda} \log(1-u)} \]
+
+            \subsection{Example: Sine Distribution}
+
+      \item Consider:
+            \[ f(x) = \frac{1}{2} \sin x \qquad x \in [0, \pi] \]
+      \item CDF:
+            \[ F_x(x) = \int_0^x \frac{1}{2} \sin t \, dt \]
+            \[ = \frac{1}{2} (1 - \cos x) \]
+            \[ F(F^{-1}(u)) = u \]
+            \[ u = \frac{1}{2} (1 - \cos F^{-1}(u)) \]
+            \[ \cos F^{-1}(u) = 1 - 2u \]
+            \[ \boxed{ F^{-1}(u) = \arccos(1 - 2u) } \]
+\end{itemize}
+
+\subsection{Rejection Sampling (Accept-Reject Method)}
+
+\begin{itemize}
+      \item Usually distribution you want to sample from is complicated
+
+            \subsection{Basic Rejection Sampling with Uniform Proposal}
+
+      \item Attempt 1: Make a sample over a finite domain of your variable
+      \item Want process to generate samples $\sim f(x) \qquad x \in [a,b]$
+
+            \includegraphics[width = 0.7 \linewidth ]{Images/lec21-rejection_sampling.png}
+
+
+            \begin{enumerate}
+                  \item Generate $x_0$ according to u(a,b):
+                        \[ g(x) = \frac{1}{b-a} = u(a,b) \equiv \text{proposal function} \]
+                  \item Consider the function:
+                        \[ C g(x) \text{ where } C \text{ is such that } C g(x) \geq f(x) \quad \forall x \in [a,b] \]
+                        For our case $C= (b-a) f_{\text{max}}$
+                        \[ C = (b-a) f_{\text{max}} \]
+                        \[ C g(x) = f_{\text{max}} \]
+                  \item Generate a uniform number from $[0, C g(x_0)]$ , $ U(0, C g(x_0))$
+
+                  \item If $u \leq f(x_0)$, accept $x_0$ If $u > f(x_0)$, reject $x_0$.
+                        \[ U(0, C g(x_0)) = C g(x) U(0,1) \]
+                        \[ u' \sim U(0,1) \]
+                        \[ u' = C g(x_0) \leq f(x_0) \]
+                        \[ \boxed{u' \leq \frac{f(x_0)}{C g(x_0)} } \]
+                        Any C s.t. $C g(x) \geq f(x)$ works,
+                        but you waste computing by picking C too large.
+            \end{enumerate}
+      \item Imagine this for $e^{-x}$ on $[0, 10]$
+
+            \includegraphics[width = 0.7\linewidth]{Images/lec21-example_for_e_-x.png}
+
+            \subsection{General Rejection Sampling with Arbitrary Proposal}
+
+      \item Attempt 2: Reduce waste, modify proposal function
+            \begin{enumerate}
+                  \item We can sample from it easily
+                  \item It is closer in shape to f
+                  \item $\exists$ C such that $C g(x) \geq f(x) \; \forall x$
+            \end{enumerate}
+            \begin{enumerate}
+                  \item Sample $x_0 \sim g(x)$ proposal
+                  \item throw uniform $u \sim U(0,1)$
+                  \item Accept $x_0$ based upon:
+                        \begin{itemize}
+                              \item Accept:
+                                    \[ u \leq \frac{f(x_0)}{C g(x_0)} \]
+                              \item Reject:
+                                    \[ u > \frac{f(x_0)}{C g(x_0)} \]
+                        \end{itemize}
+            \end{enumerate}
+      \item $A =$ accept point $x$ selected from $g(x)$ with probability:
+            \[ p = \frac{f(x)}{C g(x)} \]
+      \item Probability density of $x$ given accept:
+            \[ p(x|A) = \frac{p(A|x) g(x)}{p(A)}  = \frac{\frac{f(x)}{C g(x)} g(x) }{\int_{-\infty}^{\infty} \frac{f(x)}{C g(x)} g(x) \, dx }  = \frac{f(x)}{\int_{-\infty}^{\infty} f(x) \, dx}\]
+
+\end{itemize}
