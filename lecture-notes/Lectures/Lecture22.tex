@@ -1,0 +1,171 @@
+\section{Thursday, November 27th 2024}
+
+\subsection{Curse of Dimensionality}
+
+\begin{itemize}
+    \item curse of dimensionality in this context means that a uniform distribution in high dimension with finite points will mostly be empty space on the inside, most will be near the boundary.
+\end{itemize}
+
+\subsection{Monte Carlo Integration}
+
+\begin{itemize}
+    \item Monte Carlo Integration: often we need:
+          \[ \int f(\vec{x}) d\vec{x} \]
+          especially hard in high dimensions ($\mathbb{R}^n$)
+          \[ \int_a^b f(x) dx = \lim_{\Delta x \to 0} \sum f(x_i^*) \Delta x \]
+          where $x_i^*$ is $x$ in bin $i$.
+    \item Expectation of f over pdf $p(x)$:
+          \[ E(f) = \int f(x) p(x) dx \]
+    \item Take:
+          \[ p=U(a,b) = \frac{1}{b-a} \]
+          then:
+          \[ E_a(f) = \int_a^b f(x) \frac{1}{b-a} dx = \frac{1}{b-a} \int_a^b f(x) dx \]
+          so:
+          \[ \int_a^b f(x) dx = (b-a) E_{U(a,b)}(f) \]
+
+    \item In general if $x\sim X$
+    \item If we take sample of size $n$
+          \[ \hat{\mu} = \text{sample mean} = \frac{1}{n} \sum_{i=1}^n x_i \]
+          is an unbiased consistent estimator of true sample mean
+    \item As $n\rightarrow \infty$,
+          \[ \lim \frac{1}{n} \sum_{i=1}^n x_i \rightarrow \mu \]
+    \item Also true for functions of x
+          \[ E_x(f) = \lim_{n\rightarrow \infty} \frac{1}{n} \sum_{i=1}^n f(x_i) \]
+          where $x_i \sim X$
+
+    \item So back to our equation from before we have:
+          \[ \int_a^b f(x) dx = (b-a) E_{U(a,b)}(f) = (b-a) \frac{1}{n} \lim_{n\rightarrow \infty} \sum_{i=1}^n f(x_i) \]
+          where $x_i \sim U(a,b)$
+
+    \item c.f. (cumulative frequency?)
+          \[ \left( \frac{b-a}{n} \right) \sum_i f(x_i) \]
+          where the prefactor is the width of each bin ($\Delta x$)
+    \item Many dimensions: Riemann: 1000 bins, n-dims $f(\vec{x})$, $10^{3n}$ bins total, so even for a small n=3, that gives you $10^9$ bins.
+\end{itemize}
+
+\subsection{Importance Sampling}
+
+\begin{itemize}
+    \item Importance Sampling:
+          \[ I = \int f(x) \, dx = \int f(x) \frac{q(x)}{q(x)} \, dx = \int \frac{f(x)}{q(x)} q(x) \, dx \]
+    \item Trick: $q(x)$ is probability density with $q \neq 0$ (at least where $f \neq 0$)
+          \[ I_n = E_q \left( \frac{f(x)}{q(x)} \right) \]
+          \[ \approx \frac{1}{n} \sum_{i=1}^n \frac{f(x_i)}{q(x_i)} \]
+          where $x_i \sim q(x)$
+          \[ I = \frac{1}{n} \sum_{i=1}^n w(x_i) \]
+          where $w(x) = \frac{f(x)}{q(x)}$
+          \[ = \hat{I}_n \]
+          \[ E(\hat{I}_n) = \frac{1}{n} \sum \left( \frac{f(x_I)}{q(x_i)} \right)= \frac{1}{n} = I \]
+
+    \item Variance of $\hat{I}_n$:
+    \item General $V(y_1 + y_2 + ... + y_n) = V(y_1) + V(y_2) + ... + V(y_n)$ if $y_i$ independent
+          \[ V_q(\hat{I}_n) = \frac{1}{n^2} V_q \left( \sum_{i=1}^n w(x_i) \right) = \frac{1}{n^2} n V_q(w(x)) = \frac{1}{n} V_q(w(x)) \]
+          \[ = \frac{1}{n} \left( E_q(w(x)^2) - E_q(w(x))^2 \right) \]
+          \[ = \frac{1}{n} \left( E_q(w(x)^2) - I^2 \right) \]
+          \[ = \frac{1}{n} \left( \int \frac{f(x)^2}{q(x)} dx - I^2 \right) \]
+
+    \item Crude Monte Carlo vs Importance Sampling
+          \begin{itemize}
+              \item Crude MC: sample from uniform distribution over domain of integration
+              \item IS: sample from distribution that mimics behavior of $f(x)$
+          \end{itemize}
+    \item Minimize this -- $q$ to be proportional to $|f(x)|$
+    \item Constraint is that $q(x)$ is a valid pdf: $\int q(x) dx = 1$
+    \item f large, q large, f small, q small.
+\end{itemize}
+
+\subsection{Importance Sampling for Bayesian Inference}
+
+\begin{itemize}
+    \item Moving on:
+
+          \[ \int p(D|\theta) p(\theta) d\theta \]
+
+          norm in Bayes
+
+          \[ p(\theta|D) = \frac{p(D|\theta) p(\theta)}{\int p(D|\theta) p(\theta) d\theta} \]
+
+          Need:
+
+          \[ E_{p(\theta|D)}(f) = \int f(\theta) p(\theta|D) d\theta \]
+
+    \item Also:
+
+          \[ \int \sigma(m) p(m|D) dm \]
+
+    \item The integral before $\int f(x) p(x) dx$ is called an expectation value of f with respect to p $E_p(f)$
+
+          \[ E_p(f) = \int f(x) p(x) dx  = \int f(x) \frac{p(x)}{q(x)} q(x) dx = E_q \left( f(x) \frac{p(x)}{q(x)} \right) \]
+          \[ E_p(f) = E_q \left( f(x) \frac{p(x)}{q(x)} \right) \]
+          \[ E_p(f) \approx \frac{1}{n} \sum_{i=1}^n f(x_i^q) \frac{p(x_i^q)}{q(x_i^q)} \]
+          \[ = \frac{1}{n} \sum_{i=1}^n f(x_i^q) w(x_i^q) \]
+          where $x_i^q \sim q(x)$ and $w = \frac{p}{q}$
+    \item suppose p right shape but $\int p(x) dx = Z \neq 1$
+          \[ \tilde{p}(x) = \frac{p(x)}{Z}  \qquad \text{is a valid pdf} \]
+          \[ E_{\tilde{p}}(f) = \int f(x) \tilde{p}(x) dx \]
+          \[ = E_q \left( f(x) \frac{\tilde{p}(x)}{q(x)} \right) \]
+          \[ = \frac{1}{Z} E_q \left( f(x) \frac{p(x)}{q(x)} \right) \]
+          \[ = \frac{1}{Z} E_q \left( f(x) w(x) \right) \]
+    \item $\tilde{p}$ is a pdf
+          \[ E_{\tilde{p}}(1) = 1 = \frac{1}{Z} E_q(w(x)) \]
+    \item So:
+          \[ Z = E_q(w(x)) \]
+
+
+          \[ E_{\tilde{p}}(f) = \frac{E_q(f(x) w(x))}{E_q(w(x))}  \approx \frac{\frac{1}{n} \sum_{i=1}^n f(x_i^q) w(x_i^q)}{\frac{1}{n} \sum_{i=1}^n w(x_i^q)} \]
+          where $x_i^q \sim q(x)$
+          \[ = \frac{\bar{w f}}{\bar{w}} \]
+          where $\bar{}$ is the average.
+\end{itemize}
+
+\subsection{Metropolis-Hastings Algorithm}
+
+\begin{itemize}
+    \item Metropolis (Hastings) Algorithm
+    \item Use to sample from any (usually complicated) pdf $p(x)$
+    \item Don't need normalized pdf!
+    \item Proposal function $q$,
+          \[ p(\theta|\vec{x}) = p(\vec{x}|\theta) p(\theta) \]
+    \item But it will depend on last accepted proposal
+    \item Algorithm:
+          \begin{itemize}
+              \item Start with point $\vec{x}_0$
+              \item Pick $\vec{x}'$ from proposal distribution $q(\vec{x}'|\vec{x}_0)$
+              \item Metropolis q is symmetric: $q(\vec{a}|\vec{b}) = q(\vec{b}|\vec{a})$
+
+          \end{itemize}
+
+    \item Example: multi dimensional Gaussian:
+          \[ q(\vec{a}|\vec{b}) = \vec{b} + N(0, \Sigma) \]
+          \[ = N(\vec{b}, \Sigma) \]
+    \item Hastings q can be not symmetric.
+    \item Steps:
+          \begin{enumerate}
+              \item Start with point $\vec{x}_0$
+              \item Generate proposal $\vec{x}'$ $\sim$ $q(\vec{x}'|\vec{x}_0)$
+              \item Form acceptance ratio:
+                    \[ r = \frac{p(\vec{x}') q(\vec{x}_0|\vec{x}')}{p(\vec{x}_0) q(\vec{x}'|\vec{x}_0)} \]
+              \item
+
+                    \begin{verbatim}
+            If $r \geq 1$:
+                accept proposal: $\vec{x}_1 = \vec{x}'$
+            If $r < 1$:
+                accept with probability $r$ (throw unit number $x_1 = x_t)$ 
+            else:
+                $x_1 = x_0$ (stay at same place)
+          \end{verbatim}
+          \end{enumerate}
+
+    \item Algorithm is a stochastic process called Markov Process,
+    \item Output: $\{ x_0, x_1, x_2, ..., x_n \} = $ Markov Chain
+    \item Output (after burn-in steps) is samples from $\sim p(x)$
+
+          \includegraphics[width = 0.8 \linewidth]{Images/lec22-burn_in_MCMC.png}
+
+    \item Here we can see the burn-in period at the start
+
+          \includegraphics[width = 0.8 \linewidth]{Images/lec22-mcmc.png}
+    \item MCMC for a complicated bi-modal distribution
+\end{itemize}
+
