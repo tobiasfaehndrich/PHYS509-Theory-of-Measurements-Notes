@@ -1,0 +1,249 @@
+\section{Tuesday, December 2nd 2025}
+
+\subsection{Homework Review and Lecture Scope}
+Notes for the last homework:
+\begin{itemize}
+    \item Kernel Density Estimate, unlike Histogram, is not a binned representation of data. It is a continuous function that estimates the probability density function of a random variable.
+          \[ \sum_i \delta(x - x_i) \to \hat{f}(x) = \frac{1}{nh} \sum_{i=1}^n K\left( \frac{x - x_i}{h} \right) \]
+          where \( K \) is the kernel function (e.g., Gaussian), \( h \) is the bandwidth, and \( n \) is the number of data points.
+    \item Play around with the bandwidth so that you can get smooth but not over-smoothed estimates of the distribution.
+    \item Corner plots can be made with python package \texttt{corner.py}.
+    \item You should do the Metropolis-Hastings algorithm once yourself to understand it better.
+\end{itemize}
+
+Note that this lecture will be for the ``edification'' of the student only, and the proofs of Markov Chains will not be examinable. Although the concepts of Markov Chains should be understood.
+
+\subsection{Fundamentals of Stochastic Processes}
+\begin{itemize}
+    \item Definition: A stochastic process SP, is a collection of random variables \( \{ X_t : t \in T \} \) defined on a common probability space, where \( t \) is often interpreted as ``time'' or step.
+    \item Each random variable \( X_t \) takes values in a state space \( S \). State space is all possible values that the random variable can take.
+    \item T finite or countable, discrete time.
+    \item $T = \{0,1,2,3,...\} = \mathcal{Z}^{+}$ or finite.
+    \item $S$: finite or countable $\equiv$ Discrete states, $X_t \in \{S\} \rightarrow  \{ \text{integers} \} $
+    \item uncountable $\equiv$ Continuous states, $X_t = x$
+    \item $S = $ 3 states labelled by daily weather: Sunny, Cloudy, Rainy (S, C, R)
+    \item \[ \{ \text{Sunny, Cloudy, Rainy} \} \equiv \{ S, C, R \} \equiv \{ 1, 2, 3 \} \]
+    \item Think: System in state $X_0$ say = C. Then what is state $X_1 = $?
+    \item Sequence of random variables $\{ X_0, X_1, X_2, ... \}$ is a stochastic process.
+\end{itemize}
+
+\subsection{The Markov Property}
+\begin{itemize}
+    \item Given system has history up to step i, i.e. $X_i = S_i, X_{i-1} = S_{i-1}, X_{i-2} = S_{i-2}, ... , X_0 = S_0$
+    \item Probability of going to state $S_{i+1}$ at step $i+1$ is given by conditional probability:
+          \[ P(X_{i+1} = S_{i+1} | X_i = S_i, X_{i-1} = S_{i-1}, ... , X_0 = S_0) \]
+    \item Definition: A SP satisfies the Markov Property if:
+          \[ P(X_{i+1} = S_{i+1} | X_i = S_i, X_{i-1} = S_{i-1}, ... , X_0 = S_0) = P(X_{i+1} = S_{i+1} | X_i = S_i) \]
+          i.e. the future state depends only on the present state, not on the sequence of events that preceded it. No memory.
+    \item Label S by integers
+          \[ P(X_{n+1} = j | X_n = i) = P_{ij} \]
+          where \( P_{ij} \) is the transition probability from state \( i \) to state \( j \).
+    \item We look at homogeneous Markov Process (MP) where \( P_{ij} \) is independent of time step \( n \).
+          \[ P(X_{n+1} = j | X_n = i) = P(X_{m+1} = j | X_m = i) = P_{ij} \quad \forall n, m \in T \]
+\end{itemize}
+
+\subsection{Transition Probabilities and Matrices}
+\begin{itemize}
+    \item Transition probabilities:
+          \begin{figure}[htbp]
+              \centering
+              \begin{tikzpicture}[->,>=Stealth,auto,node distance=3cm,semithick]
+                  \tikzset{state/.style={circle,draw,minimum size=12mm,inner sep=0pt, fill=red!10}}
+                  % Nodes
+                  \node[state] (S) {S=1};
+                  \node[state] (C) [below left=of S] {C=2};
+                  \node[state] (R) [below right=of S] {R=3};
+
+                  % Transitions from S=1
+                  \draw (S) edge[loop above] node{0.2} (S);
+                  \draw (S) edge[bend right=15] node[left]{0.6} (C);
+                  \draw (S) edge[bend left=15] node[right]{0.2} (R);
+
+                  % Transitions from C=2
+                  \draw (C) edge[bend right=15] node[left]{0.3} (S);
+                  \draw (C) edge[bend right=15] node[below]{0.7} (R);
+
+                  % Transitions from R=3
+                  \draw (R) edge[bend left=15] node[right]{0.5} (S);
+                  \draw (R) edge[loop below] node{0.5} (R);
+              \end{tikzpicture}
+              \caption{Markov chain diagram for the weather model (S=Sunny, C=Cloudy, R=Rainy).}
+          \end{figure}
+
+    \item From state 1 (Sunny):
+          \begin{itemize}
+              \item $P(X_1 = 1 | X_0 = 1) = 0.2$
+              \item $P(X_1 = 2 | X_0 = 1) = 0.6$
+              \item $P(X_1 = 3 | X_0 = 1) = 0.2$
+          \end{itemize}
+          \[ \sum P(x_1 = j | x_0 = i) = 1 \quad \forall i \in S \]
+    \item Generally:
+          \[ \sum_{s \in S} P(X_{n+1} = s | X_n = i) = 1 \quad \forall i \in S \]
+    \item Encode graph in transition matrix \(T\):
+          \[ T_{i,j} \equiv P(X_{n+1} = j | X_n = i) \]
+    \item i $\rightarrow$ j,
+    \item rows = probability moving from state i to other states j
+          \[ T_{ij} = \begin{pmatrix}
+                  0.2 & 0.6 & 0.2 \\
+                  0.1 & 0   & 0.3 \\
+                  0.5 & 0   & 0.5
+              \end{pmatrix} \]
+          out of i
+    \item A stochastic matrix has $T_{ij} \geq 0$ and $\sum_j T_{ij} = 1 \quad \forall i$
+\end{itemize}
+
+\subsection{Time Evolution of State Distributions}
+\begin{itemize}
+    \item Time average from simulation $\sim (0.352, 0.212, 0.436)$ no matter initial state $X_0$
+    \item $\vec{\pi}^{(i)} = $ vector of length $=$ size of state space S. i is the step in Markov chain.
+    \item $\pi^{(i)}_j = $ probability of being in state j at step i.
+    \item Initial distribution $\vec{\pi}^{(0)}$
+    \item Suppose: $X_0 = 2$
+    \item Then: $\vec{\pi}^{(0)} = (0,1,0)$
+    \item $P(2 \to 1 ) = T_{2,1} = 0.3$
+    \item $P(2 \to 2 ) = T_{2,2} = 0$
+    \item $P(2 \to 3 ) = T_{2,3} = 0.7$
+    \item Thus: $\vec{\pi}^{(1)} = (0.3, 0, 0.7)$
+    \item $\pi^{(1)} = \vec{\pi}^{(0)} T$
+
+          \[ \pi^{(1)} = \vec{\pi}^{(0)} T = (0, 1, 0) \begin{pmatrix}
+                  0.2 & 0.6 & 0.2 \\
+                  0.1 & 0   & 0.3 \\
+                  0.5 & 0   & 0.5
+              \end{pmatrix} = (0.3, 0, 0.7) \]
+
+          \[ \pi^{(1)} = \sum_{i} \pi^{(0)}_i T_{i,j} \]
+          \[ \pi^{(1)} = \sum_i \delta_{i,2} T_{i,j} = T_{2,j} = \text{2nd row of } T \]
+
+          \[ \pi_j^{(1)} = 0.3 \delta_{j,1} + 0 \cdot \delta_{j,2} + 0.7 \delta_{j,3}  = (0.3, 0, 0.7) \]
+    \item First term represents $30\%$ chance of being in state 1, contribute 0.3(0.2, 0.6, 0.2) to next step $\pi^{(2)}$
+    \item Second term 0, no contribution
+    \item Third term 70\% chance of being in state 3, contribute 0.7(0.5, 0, 0.5) to next step $\pi^{(2)}$
+    \item $\pi^{(2)} = \vec{\pi}^{(1)} T = \vec{\pi}^{(0)} T^2$
+          \[ \pi^{(n)} = \vec{\pi}^{(0)} T^n \]
+\end{itemize}
+
+\subsection{Stationary Distributions}
+\begin{itemize}
+    \item Looks like as $n \to \infty$
+    \item This is independent of initial distribution $\vec{\pi}^{(0)}$
+    \item If limit $\lim_{n \to \infty} \pi^{(n)}$ exists, denote it by $\vec{\pi} \equiv $ Stationary Distribution
+    \item If $\forall$ then:
+          \[ \pi = \lim \pi^{(0)} T^n \text{independent of } \pi^{(0)} \]
+          \[ T^{\infty} = \lim T^n \]
+
+          \[ \pi = \pi^{(0)} T^{\infty} \forall \pi^{(0)} \]
+    \item Pick $\pi^{(0)} = (1,0,0) \qquad (0,1,0) \qquad (0,0,1)$
+          \[ (1,0,0) T^{\infty} = \text{1st row of} T^{\infty} \]
+          \[ (0,1,0) T^{\infty} = \text{2nd row of} T^{\infty} \]
+          \[ (0,0,1) T^{\infty} = \text{3rd row of} T^{\infty} \]
+          \[ T^{\infty} = \begin{pmatrix}
+                  \pi \\
+                  \pi \\
+                  \pi
+              \end{pmatrix} \]
+          \[ \pi = \lim \pi^{(0)} T^n = \pi T \]
+          \[ \pi T = \lim_{n \to \infty} \pi^{(0)} T^{n+1} = \lim_{n \to \infty} \pi^{(0)} T^n = \pi \]
+    \item Definition of Stationary Distribution:
+          \[ \boxed{ \pi = \pi T } \]
+    \item $\pi$ is a left eigenvector of T with eigenvalue 1.
+\end{itemize}
+
+\subsection{Chain Properties: Reducibility and Periodicity}
+\begin{itemize}
+    \item Example:
+          \begin{figure}[htbp]
+              \centering
+              \begin{tikzpicture}[->,>=Stealth,auto,node distance=2.5cm,semithick]
+                  \tikzset{state/.style={circle,draw,minimum size=10mm,inner sep=0pt, fill=red!10}}
+
+                  % Nodes
+                  \node[state] (n1) {1};
+                  \node[state] (n2) [above right=of n1] {2};
+                  \node[state] (n4) [below right=of n1] {4};
+                  \node[state] (n3) [right=of n2] {3};
+
+                  % Transitions
+                  \draw (n1) edge[bend left=15] node{0.5} (n2);
+                  \draw (n1) edge[bend right=15] node[swap]{0.5} (n4);
+
+                  \draw (n2) edge[bend left=15] node{1} (n3);
+                  \draw (n3) edge[bend left=15] node{1} (n2);
+
+                  \draw (n4) edge[loop right] node{1} (n4);
+              \end{tikzpicture}
+              \caption{4-state Markov chain with absorbing state 4 and periodic states 2 and 3.}
+          \end{figure}
+          \[ T = \begin{matrix}
+                  0 & \frac{1}{2} & 0 & \frac{1}{2} \\
+                  0 & 0           & 1 & 0           \\
+                  0 & 1           & 0 & 0           \\
+                  0 & 0           & 0 & 1
+              \end{matrix}
+          \]
+          \[ \pi^{a} = (0,0,0,1) \]
+          \[ \pi^{a} T  = \pi^{a}_i T_{ij} = \delta_{i,4} T_{ij} = T_{4,j}  = \delta_{4,j} \]
+          \[ \pi^a T = \pi^{a} \]
+          \[ \pi^b = (0, \frac{1}{2}, \frac{1}{2}, 0) \]
+          Also stationary
+    \item Stationary: if start in 1 not all chains reach 4
+    \item $\{2,3\}$ is an example of a periodic system
+    \item $T = \begin{bmatrix}
+                  0 & 1 \\
+                  1 & 0
+              \end{bmatrix}$ does have left eigenvector!
+    \item $T^2 = \begin{bmatrix}
+                  1 & 0 \\
+                  0 & 1
+              \end{bmatrix} = I \qquad \lim T^n$ does not exist
+    \item $T^2 = T$
+    \item ($\alpha$, $\beta$)$T$ = ($\alpha$, $\beta$)
+    \item $\alpha = \beta = 0.5$
+    \item $T^2$ is the identity matrix
+    \item Irreducible Markov Chain: A Markov chain is irreducible if it is possible to get to any state from any state.
+          \begin{itemize}
+              \item Does MP have a stationary distribution?
+              \item If so, is it unique?
+              \item Given a MP with one, will the system approach this as $n \to \infty$?
+          \end{itemize}
+
+          \[ \pi^{c} = \alpha \pi^{a} + (1 - \alpha) \pi^{b} \quad \alpha \in [0,1] \]
+          \[ \pi^c T = \alpha \pi^{a} T + (1 - \alpha) \pi^{b} T = \alpha \pi^{a} + (1 - \alpha) \pi^{b} = \pi^{c} \]
+\end{itemize}
+
+\subsection{Detailed Balance}
+\begin{itemize}
+    \item $\pi T = \pi$
+    \item $\pi_j = \sum \pi_i T_{ij}$
+    \item N equations, Global.
+          \begin{figure}[htbp]
+              \centering
+              \begin{tikzpicture}[->,>=Stealth,auto,node distance=2.5cm,semithick]
+                  \tikzset{state/.style={circle,draw,minimum size=10mm,inner sep=0pt, fill=red!10}}
+
+                  % Nodes
+                  \node[state] (n1) {1};
+                  \node[state] (n2) [right=of n1] {2};
+                  \node[state] (n4) [below=of n1] {4};
+                  \node[state] (n3) [below=of n2] {3};
+
+                  % Transitions
+                  \draw (n1) edge[bend left=15] node{$T_{12}$} (n2);
+                  % \draw (n2) edge[bend left=15] node{$T_{21}$} (n1);
+
+                  \draw (n2) edge[bend left=15] node{$T_{23}$} (n3);
+
+                  \draw (n3) edge[bend left=15] node{$T_{34}$} (n4);
+                  \draw (n4) edge[bend left=15] node{$T_{43}$} (n3);
+
+                  \draw (n4) edge[bend left=15] node{$T_{41}$} (n1);
+              \end{tikzpicture}
+              \caption{Markov chain diagram illustrating transitions between 4 states.}
+          \end{figure}
+    \item Detailed balance:
+          \[ \boxed{ \pi_i T_{ij} = \pi_j T_{ji} \quad \forall i,j \in S } \]
+    \item $N^2$ equations
+    \item $\sum_i \pi_i T_{ij} = \sum_i \pi_j T_{ji} =  \pi_j \sum_i T_{ji} = \pi_j$
+    \item Detailed balance $\implies$ stationary distribution.
+\end{itemize}
+
