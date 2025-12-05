@@ -1,0 +1,98 @@
+\section{Thursday, December 4th, 2025}
+
+\subsection{The Metropolis-Hastings Algorithm}
+
+\begin{itemize}
+    \item Sampling from distributions
+    \item Really complicated to sample from arbitrary distributions
+          \[ \pi = \pi T \]
+          \[ \pi_{i} T_{ij} = \pi_{j} T_{ji} \]
+    \item If true, $\pi T = \pi$
+    \item $\boxed{\pi = \text{Ensemble average}}$
+    \item Also time average
+    \item $S_i$ is many i states $= \pi$
+    \item Chain is t samples $\pi$
+    \item let $p(x)$ be some probability distribution
+    \item $T(y|x)$ = transition probability from state $x$ to state $y$
+          \[ \boxed{\pi(x) T(y|x) = \pi(y) T(x|y)} \]
+
+    \item Metropolis-Hastings (MH): $p(x) = \frac{f(x)}{Z}$ where $Z = \int f(x) dx$
+    \item Want to sample from $p(x)$
+    \item Want to design $T$ such that $\pi = p$
+          \[ p(x) T(x \rightarrow y) = p(y) T(y \rightarrow x) \]
+    \item Break $T$ into two parts
+          \[ T(y|x) = g(y|x) A(y|x) \]
+    \item $g(y|x)$ = proposal distribution
+    \item $A(y \rightarrow x)$ = acceptance probability
+          \[ p(x) g(y|x) A(x \rightarrow y) = p(y) g(x|y) A(y \rightarrow x) \]
+          \[ \frac{f(x)}{Z} g(y|x) A(x \rightarrow y) = \frac{f(y)}{Z} g(x|y) A(y \rightarrow x) \]
+          \[ \frac{A(x \rightarrow y)}{A(y \rightarrow x)} = \frac{f(y) g(x|y)}{f(x) g(y|x)} \]
+    \item Let $r_f = \frac{f(y) g(x|y)}{f(x) g(y|x)}$ and $r_g = \frac{g(x|y)}{g(y|x)}$
+    \item Then we have two cases:
+          \begin{itemize}
+              \item Case 1: $r_f r_g < 1$
+                    \[ A(x \rightarrow y) = r_f r_g \]
+                    \[ A(y \rightarrow x) = 1 \]
+              \item Case 2: $r_f r_g \geq 1$
+                    \[ A(x \rightarrow y) = 1 \]
+                    \[ A(y \rightarrow x) = \frac{1}{r_f r_g} \]
+          \end{itemize}
+    \item So we can summarize:
+          \[ 0 \leq A(x \rightarrow y) \leq 1 = \min(1, r_f r_g) \]
+    \item where $r_f r_g$ is uniform accept if $u \leq r_f r_g$
+    \item Above is MH algorithm. Now more specifically the Metropolis algorithm (not Hastings) is:
+          \[ g(x|y) = g(y|x) \] symmetric proposal distribution
+    \item So $r_g = 1$
+          \[ A(x \rightarrow y) = \min(1, r_f) \]
+
+\end{itemize}
+
+\subsection{Systematic Errors}
+\begin{itemize}
+    \item $\{x_i\}_{i=1}^{n}$ equal quality with resolution $\sigma$
+    \item Want to measure mean value $\mu$:
+          \[ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i \]
+    \item statistical error:
+          \[ \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}} \]
+    \item Can reduce statistical error by taking more data, thus measure anything arbitrarily well!
+    \item ... but what about systematic errors?
+    \item Measure length of object, device has 1\% uncertainty.
+    \item If device is away 1\% high, common to all
+    \item Systematic errors affect samples in common way.
+    \item Often impossible to detect in data alone.
+    \item Fit looks equally good but data is shifted away from true values.
+    \item Thermocouple example:
+          \begin{itemize}
+              \item $V_1$ at $T_1$ and $V_2$ at $T_2$
+              \item $T = \frac{T_2 - T_1}{V_2 - V_1} (V - V_1) + T_1$
+              \item Can measure anything arbitrarily well, but if $T_1$ or $T_2$ are off, all measurements are off, and thus can't systematic error.
+          \end{itemize}
+    \item How can we deal with systematic errors?
+          \begin{enumerate}
+              \item Make models of likelihood $\mathcal{L}$ for all systematic (nuisance) parameters.
+              \item Form joint likelihood with data part and systematic part.
+              \item Fit to full likelihood with all parameters treated same.
+              \item Fit and Covariance matrix now includes systematic effects.
+          \end{enumerate}
+\end{itemize}
+
+\subsection{Notes on HW3}
+
+\begin{itemize}
+    \item problem set 3 was lots of fitting for different types of exponential distributions, getting progressively more complicated.
+    \item with large stats:
+    \item chi-squared is binned fit, and ML is unbinned fit.
+    \item counts are integers and if large enough poisson gives $\sqrt{n}$ error per bin.
+    \item $x_i$ is binned centers, $y_i$ is expected counts in bin $i$ also called $f(x_i)$
+    \item use chi-squared to fit binned data:
+          \[ \chi^2 = \sum_{i}^{N} \frac{(y_i - f(x_i; \theta))^2}{\sigma_i^2} \]
+    \item note that sigma can be 2 options! either Neyman or Pearson, $\sqrt{n}$ or $\sqrt{f}$
+    \item now the $f(x_i)$ for non uniform or linear distribution is not just the function value at bin center times bin width, but rather the integral over the bin:
+          \[ f(x_i) = \int_{x_i - \Delta x/2}^{x_i + \Delta x/2} f(x) dx \]
+    \item scipy curve fit package in python is inherently limited to least squares fitting and auto uses chi-squared with Pearson errors... you must watch out for this.
+    \item minimize or minuit used to minimize negative log likelihood or chi-squared directly, find params at min, use hessian or inverse
+    \item for the question with expo norm plus background with fraction of signal f for expo norm and (1-f) for flat background:
+    \item you have an issue with the exponential potentially affecting the likelihood outside the range of the normalized non infinite uniform background.
+    \item you must use cdf of expo norm and divide data by that to get proper normalization in the range.
+    \item if you use AI, be suspicious and always ask questions!
+\end{itemize}
